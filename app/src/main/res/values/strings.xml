@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">House Renovation</string>
+    <string name="log_in">Log In</string>
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
+    <string name="or_separator">or</string>
+    <string name="register_here">Register here</string>
+    <string name="register">Register</string>
+    <string name="phoneNumber_hint">Phone number</string>
+    <string name="address_hint">Address</string>
+    <string name="submit">Submit</string>
+    <string name="worker">Worker</string>
+    <string name="customer">Customer</string>
+    <string-array name="category_array">
+        <item>Builder</item>
+        <item>Electrician</item>
+        <item>Carpenter</item>
+        <item>Drywall repair</item>
+        <item>Plumber</item>
+        <item>Gardener</item>
+    </string-array>
+
+</resources>

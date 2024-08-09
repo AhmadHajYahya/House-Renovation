@@ -1,0 +1,174 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/HRA_SCREEN_register"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity"
+    android:padding="20dp"
+    android:background="@color/app_background_color">
+
+    <!-- TextView for Register title -->
+    <TextView
+        android:id="@+id/registerTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:text="@string/register"
+        android:textSize="42sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_color_dark_blue" />
+
+    <!-- EditText for username -->
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/HRA_ETXT_register_username"
+        android:layout_width="488dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/registerTitleTextView"
+        android:layout_marginTop="24dp"
+        android:hint="@string/username_hint"
+        android:textColorHint="@color/white"
+        android:background="@color/text_input_background"
+        android:textSize="24sp"
+        android:textColor="@android:color/white"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:ellipsize="end" />
+
+    <!-- EditText for password -->
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/HRA_ETXT_register_password"
+        android:layout_width="488dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/HRA_ETXT_register_username"
+        android:layout_marginTop="12dp"
+        android:hint="@string/password_hint"
+        android:textColorHint="@color/white"
+        android:inputType="textPassword"
+        android:background="@color/text_input_background"
+        android:textSize="24sp"
+        android:textColor="@android:color/white"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:ellipsize="end" />
+
+    <!-- EditText for phone number -->
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/HRA_ETXT_register_phoneNumber"
+        android:layout_width="488dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/HRA_ETXT_register_password"
+        android:layout_marginTop="12dp"
+        android:hint="@string/phoneNumber_hint"
+        android:textColorHint="@color/white"
+        android:background="@color/text_input_background"
+        android:textSize="24sp"
+        android:textColor="@android:color/white"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:ellipsize="end" />
+
+    <!-- EditText for address -->
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/HRA_ETXT_register_address"
+        android:layout_width="488dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/HRA_ETXT_register_phoneNumber"
+        android:layout_marginTop="12dp"
+        android:hint="@string/address_hint"
+        android:textColorHint="@color/white"
+        android:background="@color/text_input_background"
+        android:textSize="24sp"
+        android:textColor="@android:color/white"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:ellipsize="end" />
+
+    <!-- Worker ImageView and TextView -->
+    <LinearLayout
+        android:id="@+id/HRA_LAYOUT_register_workerLayout"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/HRA_ETXT_register_address"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:clickable="true"
+        android:focusable="true">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/HRA_IMG_register_workerImageView"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:src="@drawable/ic_handyman" /> <!-- Replace with your image source -->
+
+        <TextView
+            android:id="@+id/HRA_TXT_register_workerTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/worker"
+            android:layout_marginTop="8dp"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/HRA_LAYOUT_register_customerLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/HRA_ETXT_register_address"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:clickable="true"
+        android:focusable="true">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/HRA_IMG_register_customerImageView"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:src="@drawable/ic_customer" /> <!-- Replace with your image source -->
+
+        <TextView
+            android:id="@+id/HRA_TXT_register_customerTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/customer"
+            android:layout_marginTop="8dp"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+    <!-- Spinner for Field -->
+
+    <!-- Button for submit -->
+    <Spinner
+        android:id="@+id/HRA_SP_register_categorySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@id/HRA_LAYOUT_register_customerLayout"
+        android:layout_marginTop="22dp"
+        android:background="@android:color/darker_gray"
+        android:padding="10dp"
+        android:textSize="24sp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/HRA_BTN_register_submitButton"
+        android:layout_width="320dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/HRA_SP_register_categorySpinner"
+        android:layout_marginTop="24dp"
+        android:textSize="24sp"
+        android:text="@string/submit"
+        android:background="@color/text_color_dark_blue"
+        android:textColor="@android:color/white" />
+
+</RelativeLayout>

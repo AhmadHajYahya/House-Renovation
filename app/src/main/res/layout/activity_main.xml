@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/HRA_SCREEN_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:padding="20dp"
+    android:background="@color/app_background_color">
+
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/HRA_IMG_mainImage"
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/house_renovation" />
+
+    <!-- TextView for Log In text -->
+    <TextView
+        android:id="@+id/HRA_TXT_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/HRA_IMG_mainImage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="@string/log_in"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="@color/text_color_dark_blue" />
+
+    <!-- EditText for username -->
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/HRA_ETXT_login_username"
+        android:layout_width="488dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/HRA_TXT_login"
+        android:layout_marginTop="24dp"
+        android:hint="@string/username_hint"
+        android:textColorHint="@color/white"
+        android:textSize="24sp"
+        android:background="@color/text_input_background"
+        android:textColor="@color/white"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:ellipsize="end" />
+
+    <!-- EditText for password -->
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/HRA_ETXT_login_password"
+        android:layout_width="488dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/HRA_ETXT_login_username"
+        android:layout_marginTop="12dp"
+        android:hint="@string/password_hint"
+        android:textColorHint="@color/white"
+        android:inputType="textPassword"
+        android:textSize="24sp"
+        android:background="@color/text_input_background"
+        android:textColor="@android:color/white"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:ellipsize="end"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/HRA_BTN_login_submitButton"
+        android:layout_width="320dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/HRA_ETXT_login_password"
+        android:layout_marginTop="24dp"
+        android:textSize="24sp"
+        android:text="@string/submit"
+        android:background="@color/text_color_dark_blue"
+        android:textColor="@android:color/white" />
+
+    <!-- TextView for "or" separator -->
+    <TextView
+        android:id="@+id/HRA_TXT_or"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/HRA_BTN_login_submitButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:textSize="18sp"
+        android:text="@string/or_separator"
+        android:textColor="@android:color/black" />
+
+    <!-- TextView for Register link -->
+    <TextView
+        android:id="@+id/HRA_LINK_register_here"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_below="@id/HRA_TXT_or"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="@string/register_here"
+        android:textSize="24sp"
+        android:textColor="@android:color/holo_green_dark"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        />
+
+  </RelativeLayout>
