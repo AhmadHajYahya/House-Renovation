@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 
 import com.ahmad.houserenovationapp.LoginActivity;
 import com.ahmad.houserenovationapp.R;
-import com.ahmad.houserenovationapp.RegisterActivity;
 import com.ahmad.houserenovationapp.enums.UserType;
 
 public class ProfileFragment  extends Fragment {
@@ -35,12 +34,9 @@ public class ProfileFragment  extends Fragment {
     }
 
     void logoutListener(){
-        HRA_LAYOUT_profile_logoutButtonContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
-            }
+        HRA_LAYOUT_profile_logoutButtonContainer.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
         });
     }
 

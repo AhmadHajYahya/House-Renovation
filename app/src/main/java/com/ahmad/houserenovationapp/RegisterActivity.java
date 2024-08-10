@@ -3,7 +3,6 @@ package com.ahmad.houserenovationapp;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import com.ahmad.houserenovationapp.enums.UserType;
+import com.ahmad.houserenovationapp.logic.GeneratorClass;
+import com.ahmad.houserenovationapp.model.User;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.HashMap;
@@ -34,7 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
     private UserType userType;
     private String selectedCategory;
 
-    private Map<String,Object> data;
+    private Map<String,String> data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,38 +55,27 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Username is empty.", Toast.LENGTH_SHORT).show();
             return;
         }
-        else{
-            this.data.put("username", this.HRA_ETXT_register_username.getText().toString().trim());
-        }
         if(Objects.requireNonNull(this.HRA_ETXT_register_name.getText()).toString().trim().isEmpty()){
             Toast.makeText(getApplicationContext(), "Personal name is empty.", Toast.LENGTH_SHORT).show();
             return;
-        }
-        else{
-            this.data.put("name", this.HRA_ETXT_register_name.getText().toString().trim());
         }
         if(Objects.requireNonNull(this.HRA_ETXT_register_password.getText()).toString().trim().isEmpty()){
             Toast.makeText(getApplicationContext(), "Password is empty.", Toast.LENGTH_SHORT).show();
             return ;
         }
-        else{
-            this.data.put("phoneNumber",this.HRA_ETXT_register_password.getText().toString().trim());
-        }
         if(Objects.requireNonNull(this.HRA_ETXT_register_phoneNumber.getText()).toString().trim().isEmpty()){
             Toast.makeText(getApplicationContext(), "Phone number is empty.", Toast.LENGTH_SHORT).show();
             return ;
-        }
-        else{
-            this.data.put("Address",this.HRA_ETXT_register_phoneNumber.getText().toString().trim());
         }
         if(Objects.requireNonNull(this.HRA_ETXT_register_address.getText()).toString().trim().isEmpty()){
             Toast.makeText(getApplicationContext(), "Address is empty.", Toast.LENGTH_SHORT).show();
             return ;
         }
-        else{
-            this.data.put("password",this.HRA_ETXT_register_address.getText().toString().trim());
-        }
-        this.data.put("type",this.userType);
+        this.data.put("username", this.HRA_ETXT_register_username.getText().toString().trim());
+        this.data.put("personalName", this.HRA_ETXT_register_name.getText().toString().trim());
+        this.data.put("phoneNumber",this.HRA_ETXT_register_password.getText().toString().trim());
+        this.data.put("address",this.HRA_ETXT_register_phoneNumber.getText().toString().trim());
+        this.data.put("password",this.HRA_ETXT_register_address.getText().toString().trim());
         if(this.userType.equals(UserType.WORKER)){
             this.data.put("category",this.selectedCategory);
         }
@@ -100,9 +90,13 @@ public class RegisterActivity extends AppCompatActivity {
             if(!data.isEmpty()){
                 // Todo
                 // register user
-                boolean created = true;
-
-                if(created){
+                User user = null;
+                if(this.userType.equals(UserType.WORKER)){
+                    user = GeneratorClass.createWorker(this.data);
+                }else{
+                    user = GeneratorClass.createCustomer(this.data);
+                }
+                if(user != null){
                     Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                     startActivity(intent);
                 }

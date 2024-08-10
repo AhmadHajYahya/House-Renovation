@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,12 +8,68 @@
     android:padding="20dp"
     android:background="@color/app_background_color">
 
-    <TextView
-        android:id="@+id/homeText"
-        android:layout_width="wrap_content"
+    <!-- Search Bar -->
+    <RelativeLayout
+        android:id="@+id/HRA_LAYOUT_searchBar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Home"
-        android:textSize="24sp"
-        android:textColor="@android:color/black" />
+        android:padding="8dp"
+        android:background="@android:color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:background="@drawable/rounded_background"
+            android:padding="4dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/HRA_IMG_home_searchIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_search"
+                android:layout_gravity="center_vertical"/>
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/HRA_ETXT_home_searchEditText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="@string/search_hint"
+                android:paddingHorizontal="8dp"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:background="@android:color/transparent"
+                android:maxLines="1"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!-- Category Buttons -->
+    <HorizontalScrollView
+        android:id="@+id/HRA_HSV_home_scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/HRA_LAYOUT_searchBar"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/HRA_LAYOUT_home_categoryButtonContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <!-- Buttons will be added dynamically here -->
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- RecyclerView for the list of professionals -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/HRA_VIEW_home_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/HRA_HSV_home_scrollView"
+        android:layout_marginTop="16dp"
+        android:padding="8dp" />
 
 </RelativeLayout>

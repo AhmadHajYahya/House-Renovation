@@ -31,5 +31,6 @@
     <string name="edit_password">Edit Password</string>
     <string name="edit_address">Edit Address</string>
     <string name="edit_category">Edit Category</string>
+    <string name="search_hint">Search</string>
 
 </resources>

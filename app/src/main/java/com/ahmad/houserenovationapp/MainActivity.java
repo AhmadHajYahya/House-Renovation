@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +19,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
+import com.ahmad.houserenovationapp.enums.Category;
 import com.ahmad.houserenovationapp.fragments.FavoriteFragment;
 import com.ahmad.houserenovationapp.fragments.HomeFragment;
 import com.ahmad.houserenovationapp.fragments.ProfileFragment;
@@ -30,6 +33,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView HRA_NAV_main_bottom_navigation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
     void findViews(){
         this.HRA_NAV_main_bottom_navigation = findViewById(R.id.HRA_NAV_main_bottom_navigation);
