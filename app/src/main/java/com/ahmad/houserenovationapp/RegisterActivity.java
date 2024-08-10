@@ -1,5 +1,6 @@
 package com.ahmad.houserenovationapp;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
     private LinearLayout HRA_LAYOUT_register_workerLayout;
     private LinearLayout HRA_LAYOUT_register_customerLayout;
     private TextInputEditText HRA_ETXT_register_username;
+    private TextInputEditText HRA_ETXT_register_name;
     private TextInputEditText HRA_ETXT_register_password;
     private TextInputEditText HRA_ETXT_register_phoneNumber;
     private TextInputEditText HRA_ETXT_register_address;
@@ -54,6 +56,13 @@ public class RegisterActivity extends AppCompatActivity {
         }
         else{
             this.data.put("username", this.HRA_ETXT_register_username.getText().toString().trim());
+        }
+        if(Objects.requireNonNull(this.HRA_ETXT_register_name.getText()).toString().trim().isEmpty()){
+            Toast.makeText(getApplicationContext(), "Personal name is empty.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else{
+            this.data.put("name", this.HRA_ETXT_register_name.getText().toString().trim());
         }
         if(Objects.requireNonNull(this.HRA_ETXT_register_password.getText()).toString().trim().isEmpty()){
             Toast.makeText(getApplicationContext(), "Password is empty.", Toast.LENGTH_SHORT).show();
@@ -91,7 +100,12 @@ public class RegisterActivity extends AppCompatActivity {
             if(!data.isEmpty()){
                 // Todo
                 // register user
+                boolean created = true;
 
+                if(created){
+                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
                 Toast.makeText(getApplicationContext(), "Registered Successfully", Toast.LENGTH_SHORT).show();
             }
         });
@@ -128,7 +142,6 @@ public class RegisterActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // Get the selected item
                 selectedCategory = parent.getItemAtPosition(position).toString();
-                Log.d("selected",selectedCategory);
             }
 
             @Override
@@ -154,6 +167,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         HRA_ETXT_register_username = findViewById(R.id.HRA_ETXT_register_username);
+        HRA_ETXT_register_name = findViewById(R.id.HRA_ETXT_register_name);
         HRA_ETXT_register_password = findViewById(R.id.HRA_ETXT_register_password);
         HRA_ETXT_register_phoneNumber = findViewById(R.id.HRA_ETXT_register_phoneNumber);
         HRA_ETXT_register_address = findViewById(R.id.HRA_ETXT_register_address);

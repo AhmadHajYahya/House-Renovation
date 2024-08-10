@@ -36,12 +36,27 @@
         android:singleLine="true"
         android:ellipsize="end" />
 
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/HRA_ETXT_register_name"
+        android:layout_width="488dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/HRA_ETXT_register_username"
+        android:layout_marginTop="12dp"
+        android:hint="@string/name_hint"
+        android:textColorHint="@color/white"
+        android:background="@color/text_input_background"
+        android:textSize="24sp"
+        android:textColor="@android:color/white"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:ellipsize="end" />
+
     <!-- EditText for password -->
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/HRA_ETXT_register_password"
         android:layout_width="488dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/HRA_ETXT_register_username"
+        android:layout_below="@id/HRA_ETXT_register_name"
         android:layout_marginTop="12dp"
         android:hint="@string/password_hint"
         android:textColorHint="@color/white"

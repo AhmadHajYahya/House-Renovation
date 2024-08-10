@@ -2,6 +2,7 @@
     <string name="app_name">House Renovation</string>
     <string name="log_in">Log In</string>
     <string name="username_hint">Username</string>
+    <string name="name_hint">Personal Name</string>
     <string name="password_hint">Password</string>
     <string name="or_separator">or</string>
     <string name="register_here">Register here</string>
@@ -19,5 +20,16 @@
         <item>Plumber</item>
         <item>Gardener</item>
     </string-array>
+    <string name="home">Home</string>
+    <string name="favorite">Favorite</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Log Out</string>
+    <string name="category">Category</string>
+    <string name="rating">Rating</string>
+    <string name="edit_profile_picture">Edit Profile Picture</string>
+    <string name="edit_personal_name">Edit Personal Name</string>
+    <string name="edit_password">Edit Password</string>
+    <string name="edit_address">Edit Address</string>
+    <string name="edit_category">Edit Category</string>
 
 </resources>
