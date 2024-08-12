@@ -22,6 +22,7 @@
     </string-array>
     <string name="home">Home</string>
     <string name="favorite">Favorite</string>
+    <string name="new_service_request">New Service Request</string>
     <string name="profile">Profile</string>
     <string name="logout">Log Out</string>
     <string name="category">Category</string>
@@ -32,5 +33,18 @@
     <string name="edit_address">Edit Address</string>
     <string name="edit_category">Edit Category</string>
     <string name="search_hint">Search</string>
-
+    <string name="requests">Requests</string>
+    <string name="cancel">Cancel</string>
+    <string name="selectCategory">Select Category:</string>
+    <string name="title">Title:</string>
+    <string name="title_hint">Edit Title</string>
+    <string name="description">Description:</string>
+    <string name="description_hint">Edit Description</string>
+    <string name="location">Location:</string>
+    <string name="request_service">Request Service</string>
+    <string name="current_job">Current Job</string>
+    <string name="personalName">Personal Name:</string>
+    <string name="phoneNumber">Phone Number:</string>
+    <string name="finish_job">Finish Job</string>
+    <string name="cancel_job">Cancel Job</string>
 </resources>

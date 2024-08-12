@@ -2,18 +2,27 @@ package com.ahmad.houserenovationapp.model;
 
 import androidx.annotation.NonNull;
 
-public class Service {
+import com.ahmad.houserenovationapp.enums.Category;
+
+import java.time.LocalDate;
+import java.util.Date;
+
+public class Request {
 
     private String id;
     private String title;
     private String description;
+    private Category category;
+    private LocalDate date;
     private Customer customer;
     private Worker worker;
 
-    public Service(String id, String title, String description, Customer customer, Worker worker) {
+    public Request(String id, String title, String description, Category category, LocalDate date, Customer customer, Worker worker) {
         this.id = id;
         this.title = title;
         this.description = description;
+        this.category = category;
+        this.date = date;
         this.customer = customer;
         this.worker = worker;
     }
@@ -68,5 +77,21 @@ public class Service {
                 ", customer=" + customer +
                 ", worker=" + worker +
                 '}';
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
