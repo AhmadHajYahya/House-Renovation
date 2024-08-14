@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "538367340301",
+    "project_id": "house-renovation-c8b06",
+    "storage_bucket": "house-renovation-c8b06.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:538367340301:android:d6ea34ebd5807619be4a44",
+        "android_client_info": {
+          "package_name": "com.ahmad.houserenovationapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "538367340301-fk021cpal05l1pa5huon46qka8fuk6gj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZevYNBimG60ji5NbpFw3FaF9VAq18lIw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "538367340301-fk021cpal05l1pa5huon46qka8fuk6gj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

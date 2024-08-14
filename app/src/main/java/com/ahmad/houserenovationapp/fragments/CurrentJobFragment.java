@@ -57,6 +57,7 @@ public class CurrentJobFragment extends Fragment implements OnMapReadyCallback {
             Toast.makeText(getActivity(),"Job Finished",Toast.LENGTH_SHORT).show();
         });
     }
+
     void cancelButtonListener(){
         HRA_BTN_currentJob_cancel.setOnClickListener(v->{
             Toast.makeText(getActivity(),"Job Canceled",Toast.LENGTH_SHORT).show();

@@ -47,4 +47,8 @@
     <string name="phoneNumber">Phone Number:</string>
     <string name="finish_job">Finish Job</string>
     <string name="cancel_job">Cancel Job</string>
+    <string name="accept">Accept</string>
+    <string name="decline">Decline</string>
+    <string name="job_details">Job Details</string>
+    <string name="jobs">Jobs</string>
 </resources>

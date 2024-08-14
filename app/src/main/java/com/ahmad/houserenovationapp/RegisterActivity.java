@@ -13,12 +13,18 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import com.ahmad.houserenovationapp.enums.Category;
 import com.ahmad.houserenovationapp.enums.UserType;
+import com.ahmad.houserenovationapp.logic.DataBaseManager;
 import com.ahmad.houserenovationapp.logic.GeneratorClass;
 import com.ahmad.houserenovationapp.model.User;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -32,7 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputEditText HRA_ETXT_register_phoneNumber;
     private TextInputEditText HRA_ETXT_register_address;
     private AppCompatButton HRA_BTN_register_submitButton;
-    private UserType userType;
+    private UserType userType ;
     private String selectedCategory;
 
     private Map<String,String> data;
@@ -47,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
         selectUserType();
         spinnerSelect();
         submitRegister();
+
     }
 
 
@@ -88,8 +95,6 @@ public class RegisterActivity extends AppCompatActivity {
         this.HRA_BTN_register_submitButton.setOnClickListener(v -> {
             getInputData();
             if(!data.isEmpty()){
-                // Todo
-                // register user
                 User user = null;
                 if(this.userType.equals(UserType.WORKER)){
                     user = GeneratorClass.createWorker(this.data);
@@ -97,7 +102,15 @@ public class RegisterActivity extends AppCompatActivity {
                     user = GeneratorClass.createCustomer(this.data);
                 }
                 if(user != null){
+                    // add user to database
+                    DataBaseManager.saveUser(user);
+
+                    // start new intent
+                    Bundle bundle = new Bundle();
+                    bundle.putString("USER_TYPE",user.getUserType().name());
+                    bundle.putString("USER_ID",user.getId());
                     Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                    intent.putExtras(bundle);
                     startActivity(intent);
                 }
                 Toast.makeText(getApplicationContext(), "Registered Successfully", Toast.LENGTH_SHORT).show();
@@ -112,7 +125,7 @@ public class RegisterActivity extends AppCompatActivity {
         HRA_LAYOUT_register_customerLayout.setOnClickListener(v -> selectCustomer());
 
         // Initially select the worker option or none
-        selectWorker();
+        selectCustomer();
     }
 
     private void selectWorker() {
@@ -150,8 +163,15 @@ public class RegisterActivity extends AppCompatActivity {
 
     void findViews(){
         this.HRA_SP_register_categorySpinner = findViewById(R.id.HRA_SP_register_categorySpinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.category_array, android.R.layout.simple_spinner_item);
+        List<String> categoryList = new ArrayList<>();
+        Category[] categories = Category.values();
+        for (int i = 1; i < categories.length; i++) {
+            categoryList.add(categories[i].name());
+        }
+
+// Create ArrayAdapter using the list of enum values
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, categoryList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         HRA_SP_register_categorySpinner.setAdapter(adapter);
 

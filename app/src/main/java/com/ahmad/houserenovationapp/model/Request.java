@@ -1,11 +1,8 @@
 package com.ahmad.houserenovationapp.model;
 
-import androidx.annotation.NonNull;
-
 import com.ahmad.houserenovationapp.enums.Category;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Request {
 
@@ -14,84 +11,111 @@ public class Request {
     private String description;
     private Category category;
     private LocalDate date;
-    private Customer customer;
-    private Worker worker;
+    private User customer;
+    private User worker;
 
-    public Request(String id, String title, String description, Category category, LocalDate date, Customer customer, Worker worker) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.category = category;
-        this.date = date;
-        this.customer = customer;
-        this.worker = worker;
+    // Private constructor to enforce object creation through the builder
+    private Request(Builder builder) {
+        this.id = builder.id;
+        this.title = builder.title;
+        this.description = builder.description;
+        this.category = builder.category;
+        this.date = builder.date;
+        this.customer = builder.customer;
+        this.worker = builder.worker;
     }
 
+    // Getters
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public Worker getWorker() {
-        return worker;
-    }
-
-    public void setWorker(Worker worker) {
-        this.worker = worker;
-    }
-
-    @NonNull
-    @Override
-    public String toString() {
-        return "Service{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", customer=" + customer +
-                ", worker=" + worker +
-                '}';
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
     }
 
     public Category getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public User getCustomer() {
+        return customer;
+    }
+
+    public User getWorker() {
+        return worker;
+    }
+
+    @Override
+    public String toString() {
+        return "Request{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", category=" + category +
+                ", date=" + date +
+                ", customer=" + customer +
+                ", worker=" + worker +
+                '}';
+    }
+
+    // Builder Class
+    public static class Builder {
+        private String id;
+        private String title;
+        private String description;
+        private Category category;
+        private LocalDate date;
+        private User customer;
+        private User worker;
+
+        // Setter methods for the builder, returning Builder for method chaining
+        public Builder setId(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder setTitle(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder setDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder setCategory(Category category) {
+            this.category = category;
+            return this;
+        }
+
+        public Builder setDate(LocalDate date) {
+            this.date = date;
+            return this;
+        }
+
+        public Builder setCustomer(User customer) {
+            this.customer = customer;
+            return this;
+        }
+
+        public Builder setWorker(User worker) {
+            this.worker = worker;
+            return this;
+        }
+
+        // Build method to create an instance of Request
+        public Request build() {
+            return new Request(this);
+        }
     }
 }

@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** @noinspection ALL*/
-public class HomeFragment extends Fragment implements OnMapReadyCallback {
+public class CustomerHomeFragment extends Fragment implements OnMapReadyCallback {
     private LinearLayout HRA_LAYOUT_home_categoryButtonContainer;
     private Button selectedButton = null; // Variable to store the selected button
     private RecyclerView HRA_VIEW_home_recyclerView;
@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_customer_home, container, false);
 
         findViews(view);
         createHorizontalScrollViewButtons();
@@ -119,12 +119,22 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
     void setupRecyclerView() {
         List<Request> requests = new ArrayList<>();
-        requests.add(new Request("1", "Garden", "Cut Grass", Category.GARDNER, LocalDate.now(), null, null));
-        requests.add(new Request("2", "Electric", "Electricty problem", Category.ELECTRICIAN, LocalDate.now(), null, null));
-        requests.add(new Request("3", "Garden", "Cut Grass", Category.GARDNER, LocalDate.now(), null, null));
-        requests.add(new Request("4", "Electric", "Electricty problem", Category.ELECTRICIAN, LocalDate.now(), null, null));
-        requests.add(new Request("5", "Garden", "Cut Grass", Category.GARDNER, LocalDate.now(), null, null));
-        requests.add(new Request("6", "Electric", "Electricty problem", Category.ELECTRICIAN, LocalDate.now(), null, null));
+        Request request = new Request.Builder()
+                .setId("request123")
+                .setTitle("Fix the plumbing")
+                .setDescription("Need to fix a leaking pipe in the kitchen")
+                .setCategory(Category.PLUMBER)
+                .setDate(LocalDate.now())
+                .setCustomer(null)
+                .setWorker(null)
+                .build();
+
+        requests.add(request);
+        requests.add(request);
+        requests.add(request);
+        requests.add(request);
+        requests.add(request);
+        requests.add(request);
 
         HRA_VIEW_home_recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         customerRequestAdapter = new CustomerRequestAdapter(getActivity(), requests,new CustomerRequestAdapter.OnRequestCancelListener() {

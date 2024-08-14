@@ -95,6 +95,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_edit"
                 android:scaleType="centerCrop"
+                android:clickable="true"
                 android:contentDescription="@string/edit_personal_name" />
         </RelativeLayout>
 
@@ -132,6 +133,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_edit"
                 android:scaleType="centerCrop"
+                android:clickable="true"
                 android:contentDescription="@string/edit_password" />
         </RelativeLayout>
 
@@ -163,16 +165,55 @@
                 tools:ignore="RelativeOverlap" />
 
             <ImageButton
-                android:id="@+id/editLocationButton"
+                android:id="@+id/editAddressButton"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_alignParentEnd="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_edit"
                 android:scaleType="centerCrop"
+                android:clickable="true"
                 android:contentDescription="@string/edit_address" />
         </RelativeLayout>
+        <!-- Category -->
+        <RelativeLayout
+            android:id="@+id/HRA_LAYOUT_profile_phoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_background"
+            android:padding="16dp"
+            android:layout_marginBottom="8dp">
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/phoneIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_phone"
+                android:layout_alignParentStart="true"/>
+
+            <TextView
+                android:id="@+id/HRA_TXT_phoneNumberTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/phoneIcon"
+                android:layout_marginStart="16dp"
+                android:text="@string/phoneNumber_hint"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                tools:ignore="RelativeOverlap" />
+
+            <ImageButton
+                android:id="@+id/editPhoneNumberButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_edit"
+                android:scaleType="centerCrop"
+                android:clickable="true"
+                android:contentDescription="@string/edit_category"/>
+
+        </RelativeLayout>
         <!-- Category -->
         <RelativeLayout
             android:id="@+id/HRA_LAYOUT_profile_category"
@@ -201,13 +242,14 @@
                 tools:ignore="RelativeOverlap" />
 
             <ImageButton
-                android:id="@+id/goToSupportButton"
+                android:id="@+id/editCategoryButton"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_alignParentEnd="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_edit"
                 android:scaleType="centerCrop"
+                android:clickable="true"
                 android:contentDescription="@string/edit_category"/>
 
         </RelativeLayout>
