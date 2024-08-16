@@ -7,15 +7,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.ahmad.houserenovationapp.LoginActivity;
 import com.ahmad.houserenovationapp.R;
 import com.ahmad.houserenovationapp.enums.UserType;
 import com.ahmad.houserenovationapp.logic.DataBaseManager;
+import com.ahmad.houserenovationapp.model.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class ProfileFragment  extends Fragment {
     private RelativeLayout HRA_LAYOUT_profile_logoutButtonContainer;
@@ -25,6 +33,11 @@ public class ProfileFragment  extends Fragment {
     private ImageButton editAddressButton;
     private ImageButton editCategoryButton;
     private ImageButton editPhoneNumberButton;
+    private TextView HRA_TXT_profile_personalNmeTextView;
+    private TextView HRA_TXT_personalNameTextView;
+    private TextView HRA_TXT_addressTextView;
+    private TextView HRA_TXT_phoneNumberTextView;
+    private TextView HRA_TXT_categoryTextView;
 
     private String userId;
     @Override
@@ -34,28 +47,34 @@ public class ProfileFragment  extends Fragment {
         findViews(view);
         logoutListener();
 
-//        Bundle bundle = getArguments();
-//        String userType = bundle.getString("USER_TYPE");
-        //userId = bundle.getString("USER_ID");
-        String userType = UserType.WORKER.name();
-        if(userType.equals(UserType.CUSTOMER.name())){
-            HRA_LAYOUT_profile_category.setVisibility(View.GONE);
-        }
-
+        HRA_LAYOUT_profile_category.setVisibility(View.GONE);
+        userId = DataBaseManager.getCurrentUser().getId();
+        viewUserData(DataBaseManager.getCurrentUser());
         listeners();
+
         // Inflate the layout for this fragment
         return view;
     }
 
     void logoutListener(){
         HRA_LAYOUT_profile_logoutButtonContainer.setOnClickListener(v -> {
+            DataBaseManager.logoutUser(); // Perform logout using FirebaseAuth
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
         });
     }
 
-    void viewUserData(){
+    void viewUserData(User user){
 
+        HRA_TXT_profile_personalNmeTextView.setText(user.getPersonalName());
+        HRA_TXT_personalNameTextView.setText(user.getPersonalName());
+        HRA_TXT_addressTextView.setText(user.getAddress());
+        HRA_TXT_phoneNumberTextView.setText(user.getPhoneNumber());
+
+        if(user.getUserType().equals(UserType.WORKER)){
+            HRA_LAYOUT_profile_category.setVisibility(View.VISIBLE);
+            HRA_TXT_categoryTextView.setText(user.getPersonalName());
+        }
     }
 
     void listeners(){
@@ -89,5 +108,10 @@ public class ProfileFragment  extends Fragment {
         editAddressButton = view.findViewById(R.id.editAddressButton);
         editCategoryButton = view.findViewById(R.id.editCategoryButton);
         editPhoneNumberButton = view.findViewById(R.id.editPhoneNumberButton);
+        HRA_TXT_profile_personalNmeTextView = view.findViewById(R.id.HRA_TXT_profile_personalNmeTextView);
+        HRA_TXT_personalNameTextView = view.findViewById(R.id.HRA_TXT_personalNameTextView);
+        HRA_TXT_addressTextView = view.findViewById(R.id.HRA_TXT_addressTextView);
+        HRA_TXT_phoneNumberTextView = view.findViewById(R.id.HRA_TXT_phoneNumberTextView);
+        HRA_TXT_categoryTextView = view.findViewById(R.id.HRA_TXT_categoryTextView);
     }
 }

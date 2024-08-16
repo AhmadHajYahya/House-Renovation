@@ -13,9 +13,9 @@ import java.util.UUID;
 
 public class GeneratorClass {
     public static User createCustomer(Map<String,String> data){
-        String id = UUID.randomUUID().toString();
+        //String id = UUID.randomUUID().toString();
         return new User.Builder()
-                .setId(id)
+                .setId(data.get("userId"))
                 .setUsername(data.get("username"))
                 .setPersonalName(data.get("personalName"))
                 .setPassword(data.get("password"))
@@ -25,10 +25,10 @@ public class GeneratorClass {
                 .build() ;
     }
     public static User createWorker(Map<String,String> data){
-        String id = UUID.randomUUID().toString();
+        //String id = UUID.randomUUID().toString();
         Category category = Category.valueOf(data.get("category"));
         return new User.Builder()
-                .setId(id)
+                .setId(data.get("userId"))
                 .setUsername(data.get("username"))
                 .setPersonalName(data.get("personalName"))
                 .setPassword(data.get("password"))

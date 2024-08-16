@@ -19,6 +19,11 @@ public class User {
     private List<User> favoriteWorkers;
     private UserType userType;
 
+
+    public User() {
+
+    }
+
     // Private constructor to enforce object creation through the builder
     private User(Builder builder) {
         this.id = builder.id;

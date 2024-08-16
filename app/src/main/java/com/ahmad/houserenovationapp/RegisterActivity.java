@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
@@ -18,7 +19,11 @@ import com.ahmad.houserenovationapp.enums.UserType;
 import com.ahmad.houserenovationapp.logic.DataBaseManager;
 import com.ahmad.houserenovationapp.logic.GeneratorClass;
 import com.ahmad.houserenovationapp.model.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -42,11 +47,12 @@ public class RegisterActivity extends AppCompatActivity {
     private String selectedCategory;
 
     private Map<String,String> data;
-
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        mAuth = FirebaseAuth.getInstance();
         data = new HashMap<>();
         findViews();
 
@@ -80,9 +86,9 @@ public class RegisterActivity extends AppCompatActivity {
         }
         this.data.put("username", this.HRA_ETXT_register_username.getText().toString().trim());
         this.data.put("personalName", this.HRA_ETXT_register_name.getText().toString().trim());
-        this.data.put("phoneNumber",this.HRA_ETXT_register_password.getText().toString().trim());
-        this.data.put("address",this.HRA_ETXT_register_phoneNumber.getText().toString().trim());
-        this.data.put("password",this.HRA_ETXT_register_address.getText().toString().trim());
+        this.data.put("password",this.HRA_ETXT_register_password.getText().toString().trim());
+        this.data.put("phoneNumber",this.HRA_ETXT_register_phoneNumber.getText().toString().trim());
+        this.data.put("address",this.HRA_ETXT_register_address.getText().toString().trim());
         if(this.userType.equals(UserType.WORKER)){
             this.data.put("category",this.selectedCategory);
         }
@@ -95,25 +101,36 @@ public class RegisterActivity extends AppCompatActivity {
         this.HRA_BTN_register_submitButton.setOnClickListener(v -> {
             getInputData();
             if(!data.isEmpty()){
-                User user = null;
-                if(this.userType.equals(UserType.WORKER)){
-                    user = GeneratorClass.createWorker(this.data);
-                }else{
-                    user = GeneratorClass.createCustomer(this.data);
-                }
-                if(user != null){
-                    // add user to database
-                    DataBaseManager.saveUser(user);
+                mAuth.createUserWithEmailAndPassword(data.get("username"), data.get("password"))
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success
+                                    FirebaseAuth auth = FirebaseAuth.getInstance();
+                                    String userId = Objects.requireNonNull(auth.getCurrentUser()).getUid();
+                                    data.put("userId", userId);
 
-                    // start new intent
-                    Bundle bundle = new Bundle();
-                    bundle.putString("USER_TYPE",user.getUserType().name());
-                    bundle.putString("USER_ID",user.getId());
-                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                }
-                Toast.makeText(getApplicationContext(), "Registered Successfully", Toast.LENGTH_SHORT).show();
+                                    User user = null;
+                                    if(userType.equals(UserType.WORKER)){
+                                        user = GeneratorClass.createWorker(data);
+                                    } else {
+                                        user = GeneratorClass.createCustomer(data);
+                                    }
+
+                                    if(user != null){
+                                        // Add user to database
+                                        DataBaseManager.saveUser(user);
+                                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                        startActivity(intent);
+                                    }
+                                    Toast.makeText(getApplicationContext(), "Registered Successfully", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Toast.makeText(RegisterActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
             }
         });
     }

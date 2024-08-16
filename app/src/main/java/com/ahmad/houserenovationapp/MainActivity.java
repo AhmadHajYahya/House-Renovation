@@ -9,13 +9,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.ahmad.houserenovationapp.callback.UserCallBack;
 import com.ahmad.houserenovationapp.enums.UserType;
 import com.ahmad.houserenovationapp.fragments.CurrentJobFragment;
 import com.ahmad.houserenovationapp.fragments.NewRequestFragment;
 import com.ahmad.houserenovationapp.fragments.CustomerHomeFragment;
 import com.ahmad.houserenovationapp.fragments.ProfileFragment;
 import com.ahmad.houserenovationapp.fragments.WorkerHomeFragment;
+import com.ahmad.houserenovationapp.logic.DataBaseManager;
+import com.ahmad.houserenovationapp.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -24,40 +29,36 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView HRA_NAV_main_customer_bottom_navigation;
     private BottomNavigationView HRA_NAV_main_worker_bottom_navigation;
 
-    private String userType;
-    private String userId;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViews();
 
-//        Intent prev = getIntent();
-//        userType = prev.getExtras().getString("USER_TYPE");
-//        userId = prev.getExtras().getString("USER_ID");
-//        Fragment fragment = null;
-//        if(userType.equals(UserType.WORKER.name())){
-//            fragment = new WorkerHomeFragment();
-//            HRA_NAV_main_customer_bottom_navigation.setVisibility(View.GONE);
-//            HRA_NAV_main_worker_bottom_navigation.setVisibility(View.VISIBLE);
-//        }
-//        else{
-//            fragment = new CustomerHomeFragment();
-//            HRA_NAV_main_customer_bottom_navigation.setVisibility(View.VISIBLE);
-//            HRA_NAV_main_worker_bottom_navigation.setVisibility(View.GONE);
-//        }
-//
-//        if (savedInstanceState == null) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.HRA_FRAGMENT_main_fragment_container, fragment).commit();
-//        }
+        DataBaseManager.getUser(new UserCallBack() {
+            @Override
+            public void onUserRetrieved(User user) {
+                if (user != null) {
+                    UserType userType = user.getUserType();
+                    Fragment fragment = null;
+                    if (userType.equals(UserType.WORKER)) {
+                        fragment = new WorkerHomeFragment();
+                        HRA_NAV_main_customer_bottom_navigation.setVisibility(View.GONE);
+                        HRA_NAV_main_worker_bottom_navigation.setVisibility(View.VISIBLE);
+                    } else {
+                        fragment = new CustomerHomeFragment();
+                        HRA_NAV_main_customer_bottom_navigation.setVisibility(View.VISIBLE);
+                        HRA_NAV_main_worker_bottom_navigation.setVisibility(View.GONE);
+                    }
 
-
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.HRA_FRAGMENT_main_fragment_container, new WorkerHomeFragment()).commit();
-        }
-
-
+                    if (savedInstanceState == null) {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.HRA_FRAGMENT_main_fragment_container, fragment).commit();
+                    }
+                } else {
+                    // Handle the case where user data is null or loading failed
+                }
+            }
+        });
 
         customerNavigatorListener();
         workerNavigatorListener();
@@ -80,10 +81,6 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new NewRequestFragment();
                 } else if (id == R.id.navigation_profile) {
                     selectedFragment = new ProfileFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("USER_TYPE", userType);
-                    bundle.putString("USER_ID",userId);
-                    selectedFragment.setArguments(bundle);
                 }
 
                 // Replace the currently displayed fragment with the selected fragment
@@ -106,10 +103,6 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new CurrentJobFragment();
                 } else if (id == R.id.worker_navigation_profile) {
                     selectedFragment = new ProfileFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("USER_TYPE", userType);
-                    bundle.putString("USER_ID",userId);
-                    selectedFragment.setArguments(bundle);
                 }
 
                 // Replace the currently displayed fragment with the selected fragment
