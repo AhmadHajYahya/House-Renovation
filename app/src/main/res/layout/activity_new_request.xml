@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:scrollbars="none"
+    tools:context=".NewRequestActivity">
+
+
+        <LinearLayout
+                android:id="@+id/main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/new_service_request"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/HRA_TXT_newRequest_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/category"
+                    android:textSize="16sp"
+                    android:layout_marginVertical="16dp"
+                    android:textStyle="bold"/>
+
+
+
+                <!-- Title (EditText) -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title1"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/HRA_ETXT_newRequest_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/title_hint"
+                    android:layout_marginBottom="16dp"
+                    android:singleLine="true"
+                    android:ellipsize="end"/>
+
+                <!-- Description (EditText) -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/description1"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/HRA_ETXT_newRequest_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/description_hint"
+                    android:layout_marginBottom="16dp"
+                    android:maxLines="5"
+                    android:ellipsize="end"/>
+
+                <!-- Location (MapView) -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/location"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"/>
+
+                <com.google.android.gms.maps.MapView
+                    android:id="@+id/HRA_MAP_newRequest_map"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_marginBottom="16dp"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/HRA_BTN_newRequest"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toStartOf="@+id/HRA_BTN_newRequest_cancel"
+                            android:text="@string/request_service"
+                            android:textSize="18sp"
+                            android:textColor="@android:color/white"
+                            android:background="@android:color/holo_green_dark"/>
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/HRA_BTN_newRequest_cancel"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:text="@string/cancel"
+                            android:textSize="18sp"
+                            android:textColor="@android:color/white"
+                            android:background="@android:color/holo_red_dark"/>
+
+                        <!-- Request Button -->
+
+                </RelativeLayout>
+        </LinearLayout>
+</ScrollView>

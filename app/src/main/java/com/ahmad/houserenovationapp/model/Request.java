@@ -1,6 +1,7 @@
 package com.ahmad.houserenovationapp.model;
 
 import com.ahmad.houserenovationapp.enums.Category;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.time.LocalDate;
 
@@ -10,10 +11,15 @@ public class Request {
     private String title;
     private String description;
     private Category category;
-    private LocalDate date;
+    private String date;
+    private double latitude;
+    private double longitude;
     private User customer;
     private User worker;
 
+    public Request(){
+
+    }
     // Private constructor to enforce object creation through the builder
     private Request(Builder builder) {
         this.id = builder.id;
@@ -23,6 +29,8 @@ public class Request {
         this.date = builder.date;
         this.customer = builder.customer;
         this.worker = builder.worker;
+        this.latitude = builder.latitude;
+        this.longitude = builder.longitude;
     }
 
     // Getters
@@ -42,7 +50,7 @@ public class Request {
         return category;
     }
 
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -54,6 +62,14 @@ public class Request {
         return worker;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
     @Override
     public String toString() {
         return "Request{" +
@@ -61,7 +77,9 @@ public class Request {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", category=" + category +
-                ", date=" + date +
+                ", date='" + date + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
                 ", customer=" + customer +
                 ", worker=" + worker +
                 '}';
@@ -73,10 +91,11 @@ public class Request {
         private String title;
         private String description;
         private Category category;
-        private LocalDate date;
         private User customer;
         private User worker;
-
+        private String date;  // Change from LocalDate to String
+        private double latitude;  // Replace LatLng with latitude and longitude
+        private double longitude;
         // Setter methods for the builder, returning Builder for method chaining
         public Builder setId(String id) {
             this.id = id;
@@ -98,7 +117,7 @@ public class Request {
             return this;
         }
 
-        public Builder setDate(LocalDate date) {
+        public Builder setDate(String date) {
             this.date = date;
             return this;
         }
@@ -110,6 +129,11 @@ public class Request {
 
         public Builder setWorker(User worker) {
             this.worker = worker;
+            return this;
+        }
+        public Builder setLocation(double latitude,double longitude) {
+            this.latitude = latitude;
+            this.longitude = longitude;
             return this;
         }
 

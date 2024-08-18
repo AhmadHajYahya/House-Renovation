@@ -31,6 +31,7 @@ public class MapHandler {
     private Marker selectedLocationMarker;
     private final FusedLocationProviderClient fusedLocationClient;
     private static final int LOCATION_REQUEST_CODE = 1000;
+    private LatLng currentLocation;
 
     public MapHandler(Context context, MapView mapView, OnMapReadyCallback callback) {
         this.context = context;
@@ -59,7 +60,7 @@ public class MapHandler {
         });
     }
 
-    private void setupMap(GoogleMap googleMap) {
+    public void setupMap(GoogleMap googleMap) {
         mMap = googleMap;
         // Check for location permissions
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
@@ -82,20 +83,11 @@ public class MapHandler {
                     public void onSuccess(Location location) {
                         if (location != null) {
                             LatLng myLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                            setCurrentLocation(myLocation);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15));
                         }
                     }
                 });
-
-        // Set a click listener for the map
-        mMap.setOnMapClickListener(latLng -> {
-            if (selectedLocationMarker != null) {
-                selectedLocationMarker.remove();
-            }
-
-            selectedLocationMarker = mMap.addMarker(new MarkerOptions().position(latLng).title("Selected Location"));
-            selectedLocationMarker.showInfoWindow();
-        });
     }
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -108,6 +100,14 @@ public class MapHandler {
                 Toast.makeText(context, "Permission denied", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public LatLng getCurrentLocation() {
+        return currentLocation;
+    }
+
+    public void setCurrentLocation(LatLng currentLocation) {
+        this.currentLocation = currentLocation;
     }
 
     public Marker getSelectedLocationMarker(){

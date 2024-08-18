@@ -3,40 +3,41 @@ package com.ahmad.houserenovationapp.model;
 import com.ahmad.houserenovationapp.enums.Category;
 import com.ahmad.houserenovationapp.enums.UserType;
 
+import java.util.ArrayList;
 import java.util.List;
 
-/** @noinspection ALL*/
 public class User {
     private String id;
-    private String username;
+    private String email;
     private String personalName;
     private String password;
-    private String address;
+    private double latitude;
+    private double longitude;
     private String phoneNumber;
     private Category workCategory;
     private double rating;
     private boolean isWorking;
-    private List<User> favoriteWorkers;
     private UserType userType;
-
+    private List<String> favoriteWorkers; // List of favorite worker IDs
 
     public User() {
-
+        this.favoriteWorkers = new ArrayList<>();
     }
 
     // Private constructor to enforce object creation through the builder
     private User(Builder builder) {
         this.id = builder.id;
-        this.username = builder.username;
+        this.email = builder.email;
         this.personalName = builder.personalName;
         this.password = builder.password;
-        this.address = builder.address;
         this.phoneNumber = builder.phoneNumber;
         this.workCategory = builder.workCategory;
         this.rating = builder.rating;
         this.isWorking = builder.isWorking;
-        this.favoriteWorkers = builder.favoriteWorkers;
         this.userType = builder.userType;
+        this.latitude = builder.latitude;
+        this.longitude = builder.longitude;
+        this.favoriteWorkers = builder.favoriteWorkers != null ? builder.favoriteWorkers : new ArrayList<>();
     }
 
     // Getters
@@ -44,8 +45,8 @@ public class User {
         return id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
     public String getPersonalName() {
@@ -54,10 +55,6 @@ public class User {
 
     public String getPassword() {
         return password;
-    }
-
-    public String getAddress() {
-        return address;
     }
 
     public String getPhoneNumber() {
@@ -76,44 +73,64 @@ public class User {
         return isWorking;
     }
 
-    public List<User> getFavoriteWorkers() {
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public List<String> getFavoriteWorkers() {
         return favoriteWorkers;
     }
 
-    public UserType getUserType() {
-        return userType;
+    // Method to add a worker to the favorite list
+    public void addFavoriteWorker(String workerId) {
+        if (!favoriteWorkers.contains(workerId)) {
+            favoriteWorkers.add(workerId);
+        }
+    }
+
+    // Method to remove a worker from the favorite list
+    public void removeFavoriteWorker(String workerId) {
+        favoriteWorkers.remove(workerId);
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "id='" + id + '\'' +
-                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
                 ", personalName='" + personalName + '\'' +
                 ", password='" + password + '\'' +
-                ", address='" + address + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", workCategory=" + workCategory +
                 ", rating=" + rating +
                 ", isWorking=" + isWorking +
-                ", favoriteWorkers=" + favoriteWorkers +
                 ", userType=" + userType +
+                ", favoriteWorkers=" + favoriteWorkers +
                 '}';
     }
 
     // Builder Class
     public static class Builder {
         private String id;
-        private String username;
+        private String email;
         private String personalName;
         private String password;
-        private String address;
+        private double latitude;
+        private double longitude;
         private String phoneNumber;
         private Category workCategory;
         private double rating;
         private boolean isWorking;
-        private List<User> favoriteWorkers;
         private UserType userType;
+        private List<String> favoriteWorkers;
 
         // Setter methods for the builder, returning Builder for method chaining
         public Builder setId(String id) {
@@ -121,8 +138,8 @@ public class User {
             return this;
         }
 
-        public Builder setUsername(String username) {
-            this.username = username;
+        public Builder setEmail(String email) {
+            this.email = email;
             return this;
         }
 
@@ -133,11 +150,6 @@ public class User {
 
         public Builder setPassword(String password) {
             this.password = password;
-            return this;
-        }
-
-        public Builder setAddress(String address) {
-            this.address = address;
             return this;
         }
 
@@ -161,13 +173,19 @@ public class User {
             return this;
         }
 
-        public Builder setFavoriteWorkers(List<User> favoriteWorkers) {
-            this.favoriteWorkers = favoriteWorkers;
+        public Builder setUserType(UserType userType) {
+            this.userType = userType;
             return this;
         }
 
-        public Builder setUserType(UserType userType) {
-            this.userType = userType;
+        public Builder setLocation(double latitude, double longitude) {
+            this.latitude = latitude;
+            this.longitude = longitude;
+            return this;
+        }
+
+        public Builder setFavoriteWorkers(List<String> favoriteWorkers) {
+            this.favoriteWorkers = favoriteWorkers;
             return this;
         }
 

@@ -5,9 +5,13 @@
         android:icon="@drawable/ic_home"
         android:title="@string/home" />
     <item
-        android:id="@+id/navigation_add_request"
-        android:icon="@drawable/ic_add"
-        android:title="@string/new_service_request" />
+        android:id="@+id/navigation_myRequest"
+        android:icon="@drawable/ic_request"
+        android:title="@string/my_requests" />
+<!--    <item-->
+<!--        android:id="@+id/navigation_add_request"-->
+<!--        android:icon="@drawable/ic_add"-->
+<!--        android:title="@string/new_service_request" />-->
     <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_profile"

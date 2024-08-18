@@ -22,7 +22,7 @@ import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private TextInputEditText HRA_ETXT_login_username;
+    private TextInputEditText HRA_ETXT_login_email;
     private TextInputEditText HRA_ETXT_login_password;
     private AppCompatButton HRA_BTN_login_submitButton;
     private TextView HRA_LINK_register_here;
@@ -52,15 +52,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     void getInputData(){
-        if(Objects.requireNonNull(this.HRA_ETXT_login_username.getText()).toString().trim().isEmpty()){
-            Toast.makeText(getApplicationContext(), "Username is empty.", Toast.LENGTH_SHORT).show();
+        if(Objects.requireNonNull(this.HRA_ETXT_login_email.getText()).toString().trim().isEmpty()){
+            Toast.makeText(getApplicationContext(), "Email is empty.", Toast.LENGTH_SHORT).show();
             return;
         }
         if(Objects.requireNonNull(this.HRA_ETXT_login_password.getText()).toString().trim().isEmpty()){
             Toast.makeText(getApplicationContext(), "Password is empty.", Toast.LENGTH_SHORT).show();
             return;
         }
-        this.data.put("username", this.HRA_ETXT_login_username.getText().toString().trim());
+        this.data.put("email", this.HRA_ETXT_login_email.getText().toString().trim());
         this.data.put("password",this.HRA_ETXT_login_password.getText().toString().trim());
     }
 
@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         this.HRA_BTN_login_submitButton.setOnClickListener(v -> {
             getInputData();
             if(!data.isEmpty()){
-                mAuth.signInWithEmailAndPassword(data.get("username"), data.get("password"))
+                mAuth.signInWithEmailAndPassword(data.get("email"), data.get("password"))
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -96,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
 
     void findView(){
         this.HRA_LINK_register_here = findViewById(R.id.HRA_LINK_register_here);
-        this.HRA_ETXT_login_username = findViewById(R.id.HRA_ETXT_login_username);
+        this.HRA_ETXT_login_email = findViewById(R.id.HRA_ETXT_login_email);
         this.HRA_ETXT_login_password = findViewById(R.id.HRA_ETXT_login_password);
         this.HRA_BTN_login_submitButton = findViewById(R.id.HRA_BTN_login_submitButton);
     }

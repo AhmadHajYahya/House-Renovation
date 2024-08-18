@@ -1,6 +1,5 @@
 package com.ahmad.houserenovationapp;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,17 +11,13 @@ import androidx.fragment.app.Fragment;
 import com.ahmad.houserenovationapp.callback.UserCallBack;
 import com.ahmad.houserenovationapp.enums.UserType;
 import com.ahmad.houserenovationapp.fragments.CurrentJobFragment;
-import com.ahmad.houserenovationapp.fragments.NewRequestFragment;
+import com.ahmad.houserenovationapp.fragments.CustomerRequestsFragment;
 import com.ahmad.houserenovationapp.fragments.CustomerHomeFragment;
 import com.ahmad.houserenovationapp.fragments.ProfileFragment;
 import com.ahmad.houserenovationapp.fragments.WorkerHomeFragment;
 import com.ahmad.houserenovationapp.logic.DataBaseManager;
 import com.ahmad.houserenovationapp.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViews();
-
+        //DataBaseManager.initUsers();
         DataBaseManager.getUser(new UserCallBack() {
             @Override
             public void onUserRetrieved(User user) {
@@ -77,10 +72,15 @@ public class MainActivity extends AppCompatActivity {
                 int id = item.getItemId();
                 if (id == R.id.navigation_home) {
                     selectedFragment = new CustomerHomeFragment();
-                } else if (id == R.id.navigation_add_request) {
-                    selectedFragment = new NewRequestFragment();
-                } else if (id == R.id.navigation_profile) {
+                }
+//                else if (id == R.id.navigation_add_request) {
+//
+//                }
+                else if (id == R.id.navigation_profile) {
                     selectedFragment = new ProfileFragment();
+                }
+                else if(id == R.id.navigation_myRequest){
+                    selectedFragment = new CustomerRequestsFragment();
                 }
 
                 // Replace the currently displayed fragment with the selected fragment

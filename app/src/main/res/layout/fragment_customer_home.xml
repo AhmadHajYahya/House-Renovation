@@ -36,7 +36,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:hint="@string/search_hint"
+                android:hint="@string/search_by_worker_personal_name"
                 android:paddingHorizontal="8dp"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
@@ -51,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/HRA_LAYOUT_searchBar"
-        android:text="@string/category"
+        android:text="@string/category1"
         android:textSize="24sp"
         android:textStyle="bold"/>
     <!-- Category Buttons -->
@@ -72,45 +72,64 @@
             <!-- Buttons will be added dynamically here -->
         </LinearLayout>
     </HorizontalScrollView>
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/HRA_IMG_home_mapIcon"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginVertical="12dp"
-        android:layout_below="@+id/HRA_HSV_home_scrollView"
-        android:src="@drawable/ic_map"
-        android:layout_gravity="center_vertical"
-        android:clickable="true"/>
+    <RelativeLayout
+        android:id="@+id/HRA_LAYOUT_home_IconsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/HRA_HSV_home_scrollView">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/HRA_IMG_home_mapIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginVertical="12dp"
+
+            android:src="@drawable/ic_map"
+            android:layout_gravity="center_vertical"
+            android:clickable="true"/>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/HRA_IMG_home_favoriteIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginVertical="12dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_heart"
+            android:layout_gravity="center_vertical"
+            android:clickable="true"/>
+    </RelativeLayout>
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/HRA_VIEW_home_map_view"
         android:layout_width="420dp"
         android:layout_height="420dp"
-        android:layout_below="@+id/HRA_IMG_home_mapIcon"
+        android:layout_below="@+id/HRA_LAYOUT_home_IconsLayout"
         android:visibility="gone"/>
 
 
     <RelativeLayout
-        android:id="@+id/HRA_LAYOUT_home_requestsLayout"
+        android:id="@+id/HRA_LAYOUT_customerHome_Workers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/HRA_VIEW_home_map_view">
         <TextView
-            android:id="@+id/HRA_TXT_home_requestsText"
+            android:id="@+id/HRA_TXT_customerRequests_requestsText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/requests"
+            android:layout_centerHorizontal="true"
+            android:text="@string/workers"
             android:textSize="24sp"
             android:textStyle="bold"/>
 
         <!-- RecyclerView for the list of professionals -->
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/HRA_VIEW_home_recyclerView"
+            android:id="@+id/HRA_VIEW_customerHome_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/HRA_TXT_home_requestsText"
+            android:layout_below="@id/HRA_TXT_customerRequests_requestsText"
             android:layout_marginTop="16dp"/>
     </RelativeLayout>
+
+
 
 </RelativeLayout>

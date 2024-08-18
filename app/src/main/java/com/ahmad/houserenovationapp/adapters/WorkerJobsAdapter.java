@@ -46,7 +46,7 @@ public class WorkerJobsAdapter extends RecyclerView.Adapter<WorkerJobsAdapter.Jo
 
         holder.HRA_TXT_job_customer_personalName.setText("Personal Name: " + request.getCustomer().getPersonalName());
         holder.HRA_TXT_job_customer_phoneNumber.setText("Phone number: " + request.getCustomer().getPhoneNumber());
-        holder.HRA_TXT_job_customer_location.setText("Location: " + request.getCustomer().getAddress());
+        //holder.HRA_TXT_job_customer_location.setText("Location: " + request.getCustomer().getAddress()); TODO
 
         // Set up the cancel button click listener
         holder.HRA_BTN_job_accept.setOnClickListener(v -> {

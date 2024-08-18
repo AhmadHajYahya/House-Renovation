@@ -30,12 +30,10 @@ public class ProfileFragment  extends Fragment {
     private RelativeLayout HRA_LAYOUT_profile_category;
     private ImageButton editPersonalNameButton;
     private ImageButton editPasswordButton;
-    private ImageButton editAddressButton;
     private ImageButton editCategoryButton;
     private ImageButton editPhoneNumberButton;
     private TextView HRA_TXT_profile_personalNmeTextView;
     private TextView HRA_TXT_personalNameTextView;
-    private TextView HRA_TXT_addressTextView;
     private TextView HRA_TXT_phoneNumberTextView;
     private TextView HRA_TXT_categoryTextView;
 
@@ -68,9 +66,7 @@ public class ProfileFragment  extends Fragment {
 
         HRA_TXT_profile_personalNmeTextView.setText(user.getPersonalName());
         HRA_TXT_personalNameTextView.setText(user.getPersonalName());
-        HRA_TXT_addressTextView.setText(user.getAddress());
         HRA_TXT_phoneNumberTextView.setText(user.getPhoneNumber());
-
         if(user.getUserType().equals(UserType.WORKER)){
             HRA_LAYOUT_profile_category.setVisibility(View.VISIBLE);
             HRA_TXT_categoryTextView.setText(user.getPersonalName());
@@ -85,10 +81,6 @@ public class ProfileFragment  extends Fragment {
         editPasswordButton.setOnClickListener(v->{
             // TODO
             //DataBaseManager.updateUserData(userId,"password", value);
-        });
-        editAddressButton.setOnClickListener(v->{
-            // TODO
-            //DataBaseManager.updateUserData(userId,"address", value);
         });
         editCategoryButton.setOnClickListener(v->{
             // TODO
@@ -105,12 +97,10 @@ public class ProfileFragment  extends Fragment {
         HRA_LAYOUT_profile_category = view.findViewById(R.id.HRA_LAYOUT_profile_category);
         editPersonalNameButton = view.findViewById(R.id.editPersonalNameButton);
         editPasswordButton = view.findViewById(R.id.editPasswordButton);
-        editAddressButton = view.findViewById(R.id.editAddressButton);
         editCategoryButton = view.findViewById(R.id.editCategoryButton);
         editPhoneNumberButton = view.findViewById(R.id.editPhoneNumberButton);
         HRA_TXT_profile_personalNmeTextView = view.findViewById(R.id.HRA_TXT_profile_personalNmeTextView);
         HRA_TXT_personalNameTextView = view.findViewById(R.id.HRA_TXT_personalNameTextView);
-        HRA_TXT_addressTextView = view.findViewById(R.id.HRA_TXT_addressTextView);
         HRA_TXT_phoneNumberTextView = view.findViewById(R.id.HRA_TXT_phoneNumberTextView);
         HRA_TXT_categoryTextView = view.findViewById(R.id.HRA_TXT_categoryTextView);
     }
