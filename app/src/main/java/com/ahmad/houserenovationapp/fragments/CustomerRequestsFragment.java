@@ -22,7 +22,7 @@ import com.ahmad.houserenovationapp.model.Request;
 import com.ahmad.houserenovationapp.model.User;
 
 import java.util.List;
-
+/** @noinspection ALL*/
 public class CustomerRequestsFragment extends Fragment {
     private RecyclerView HRA_VIEW_customerRequests_recyclerView;
     private TextView HRA_TXT_customerRequests_noRequests;

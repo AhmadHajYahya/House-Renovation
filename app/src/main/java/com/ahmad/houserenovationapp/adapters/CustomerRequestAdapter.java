@@ -62,6 +62,12 @@ public class CustomerRequestAdapter extends RecyclerView.Adapter<CustomerRequest
             holder.HRA_BTN_request_cancel.setVisibility(View.VISIBLE);
         }
 
+        if(request.getStatus().equals(Status.DECLINED)){
+            holder.HRA_TXT_request_declined_Message.setVisibility(View.VISIBLE);
+            holder.HRA_BTN_request_rateWorker.setVisibility(View.GONE);
+            holder.HRA_BTN_request_cancel.setVisibility(View.VISIBLE);
+        }
+
         // Set up the cancel button click listener
         holder.HRA_BTN_request_cancel.setOnClickListener(v -> {
             if (cancelListener != null) {
@@ -92,6 +98,7 @@ public class CustomerRequestAdapter extends RecyclerView.Adapter<CustomerRequest
         TextView HRA_TXT_request_worker_personalName;
         TextView HRA_TXT_request_worker_category;
         TextView HRA_TXT_request_worker_rating;
+        TextView HRA_TXT_request_declined_Message;
         AppCompatButton HRA_BTN_request_cancel;
         AppCompatButton HRA_BTN_request_rateWorker;
 
@@ -108,6 +115,7 @@ public class CustomerRequestAdapter extends RecyclerView.Adapter<CustomerRequest
             HRA_TXT_request_worker_category= itemView.findViewById(R.id.HRA_TXT_request_worker_category);
             HRA_TXT_request_worker_rating= itemView.findViewById(R.id.HRA_TXT_request_worker_rating);
             HRA_TXT_request_status= itemView.findViewById(R.id.HRA_TXT_request_status);
+            HRA_TXT_request_declined_Message= itemView.findViewById(R.id.HRA_TXT_request_declined_Message);
         }
     }
 

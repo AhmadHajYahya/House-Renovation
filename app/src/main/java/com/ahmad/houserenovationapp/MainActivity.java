@@ -1,7 +1,6 @@
 package com.ahmad.houserenovationapp;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -13,8 +12,8 @@ import com.ahmad.houserenovationapp.callback.RequestCallBack;
 import com.ahmad.houserenovationapp.callback.UserCallBack;
 import com.ahmad.houserenovationapp.enums.UserType;
 import com.ahmad.houserenovationapp.fragments.CurrentJobFragment;
-import com.ahmad.houserenovationapp.fragments.CustomerRequestsFragment;
 import com.ahmad.houserenovationapp.fragments.CustomerHomeFragment;
+import com.ahmad.houserenovationapp.fragments.CustomerRequestsFragment;
 import com.ahmad.houserenovationapp.fragments.ProfileFragment;
 import com.ahmad.houserenovationapp.fragments.WorkerHomeFragment;
 import com.ahmad.houserenovationapp.logic.DataBaseManager;
@@ -22,7 +21,7 @@ import com.ahmad.houserenovationapp.logic.MyDataManager;
 import com.ahmad.houserenovationapp.model.Request;
 import com.ahmad.houserenovationapp.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
+/** @noinspection ALL*/
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView HRA_NAV_main_customer_bottom_navigation;

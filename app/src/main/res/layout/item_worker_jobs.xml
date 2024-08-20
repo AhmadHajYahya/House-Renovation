@@ -104,15 +104,6 @@
             android:textColor="@color/black"
             android:layout_marginTop="8dp"
             />
-        <TextView
-            android:id="@+id/HRA_TXT_job_customer_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/location"
-            android:textSize="18sp"
-            android:textColor="@color/black"
-            android:layout_marginTop="8dp"
-            />
 
         <RelativeLayout
             android:layout_width="wrap_content"

@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
+/** @noinspection ALL*/
 public class LoginActivity extends AppCompatActivity {
 
     private TextInputEditText HRA_ETXT_login_email;
@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(), "Welcome", Toast.LENGTH_SHORT).show();
                                 } else {
                                     // If sign in fails, display a message to the user.
-                                    Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this, "Email or Password is wrong.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });

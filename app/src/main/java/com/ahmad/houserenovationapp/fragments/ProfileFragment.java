@@ -20,17 +20,16 @@ import com.ahmad.houserenovationapp.enums.UserType;
 import com.ahmad.houserenovationapp.logic.DataBaseManager;
 import com.ahmad.houserenovationapp.model.User;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/** @noinspection ALL*/
 public class ProfileFragment extends Fragment {
     private RelativeLayout HRA_LAYOUT_profile_logoutButtonContainer;
     private RelativeLayout HRA_LAYOUT_profile_category;
+    private RelativeLayout HRA_LAYOUT_profile_rating;
     private ImageButton editPersonalNameButton;
     private ImageButton editPasswordButton;
     private ImageButton editCategoryButton;
@@ -39,6 +38,8 @@ public class ProfileFragment extends Fragment {
     private TextView HRA_TXT_personalNameTextView;
     private TextView HRA_TXT_phoneNumberTextView;
     private TextView HRA_TXT_categoryTextView;
+    private TextView HRA_TXT_passwordTextView;
+    private TextView HRA_TXT_profile_rating;
 
     private String userId;
 
@@ -50,6 +51,7 @@ public class ProfileFragment extends Fragment {
         logoutListener();
 
         HRA_LAYOUT_profile_category.setVisibility(View.GONE);
+        HRA_LAYOUT_profile_rating.setVisibility(View.GONE);
         userId = DataBaseManager.getCurrentUser().getId();
         viewUserData(DataBaseManager.getCurrentUser());
         listeners();
@@ -72,7 +74,15 @@ public class ProfileFragment extends Fragment {
         if (user.getUserType().equals(UserType.WORKER)) {
             HRA_LAYOUT_profile_category.setVisibility(View.VISIBLE);
             HRA_TXT_categoryTextView.setText(user.getWorkCategory().toString());
+            HRA_LAYOUT_profile_rating.setVisibility(View.VISIBLE);
+            HRA_TXT_profile_rating.setText(getString(R.string.rating1,user.getRating()));
+
         }
+        String stars ="";
+        for (int i = 0 ; i < user.getPassword().length();i++){
+            stars += "*";
+        }
+        HRA_TXT_passwordTextView.setText(stars);
     }
 
     void listeners() {
@@ -157,7 +167,13 @@ public class ProfileFragment extends Fragment {
             case "workCategory":
                 HRA_TXT_categoryTextView.setText(newValue);
                 break;
-            // No need to update UI for password change
+            case "password":
+                String stars ="";
+                for (int i = 0 ; i < newValue.length();i++){
+                    stars += "*";
+                }
+                HRA_TXT_passwordTextView.setText(stars);
+                break;
         }
     }
 
@@ -172,6 +188,9 @@ public class ProfileFragment extends Fragment {
         HRA_TXT_personalNameTextView = view.findViewById(R.id.HRA_TXT_personalNameTextView);
         HRA_TXT_phoneNumberTextView = view.findViewById(R.id.HRA_TXT_phoneNumberTextView);
         HRA_TXT_categoryTextView = view.findViewById(R.id.HRA_TXT_categoryTextView);
+        HRA_TXT_passwordTextView = view.findViewById(R.id.HRA_TXT_passwordTextView);
+        HRA_LAYOUT_profile_rating = view.findViewById(R.id.HRA_LAYOUT_profile_rating);
+        HRA_TXT_profile_rating = view.findViewById(R.id.HRA_TXT_profile_rating);
     }
 }
 

@@ -56,7 +56,7 @@
     <string name="workers">Workers</string>
     <string name="email_hint">Email</string>
     <string name="service_details">Service Details</string>
-    <string name="noJob">No Job</string>
+    <string name="noJob">No Job or the current job is canceled</string>
     <string name="category1">Category</string>
     <string name="title1">Title:</string>
     <string name="description1">Description:</string>
@@ -66,4 +66,8 @@
     <string name="startWorking">Start working</string>
     <string name="noRequests">No Requests</string>
     <string name="noJobs">No Jobs</string>
+    <string name="RateTheWorker">Rate the Worker</string>
+    <string name="WorkerName">Worker Personal Name</string>
+    <string name="declinedMessage">Your request is declined by the worker, please CANCEL the request and hire other worker.</string>
+    <string name="rating1">Rating: %1$s</string>
 </resources>

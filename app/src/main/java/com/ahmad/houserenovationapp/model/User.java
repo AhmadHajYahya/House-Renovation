@@ -5,7 +5,7 @@ import com.ahmad.houserenovationapp.enums.UserType;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/** @noinspection ALL*/
 public class User {
     private String id;
     private String email;

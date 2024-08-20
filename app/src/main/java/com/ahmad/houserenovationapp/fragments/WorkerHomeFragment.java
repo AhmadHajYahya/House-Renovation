@@ -23,7 +23,7 @@ import com.ahmad.houserenovationapp.model.Request;
 import com.ahmad.houserenovationapp.model.User;
 
 import java.util.List;
-
+/** @noinspection ALL*/
 public class WorkerHomeFragment extends Fragment {
     private RecyclerView HRA_VIEW_worker_home_recyclerView;
     private TextView HRA_TXT_worker_home_noRequests;
@@ -44,7 +44,7 @@ public class WorkerHomeFragment extends Fragment {
             @Override
             public void onRequestsRetrieved(List<Request> requests) {
                 if(!requests.isEmpty()){
-                    HRA_VIEW_worker_home_recyclerView.setVisibility(View.GONE);
+                    HRA_TXT_worker_home_noRequests.setVisibility(View.GONE);
                     HRA_VIEW_worker_home_recyclerView.setVisibility(View.VISIBLE);
                     HRA_VIEW_worker_home_recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                     workerJobsAdapter = new WorkerJobsAdapter(getActivity(), requests,new WorkerJobsAdapter.OnJobAcceptListener() {
@@ -83,7 +83,7 @@ public class WorkerHomeFragment extends Fragment {
                     HRA_VIEW_worker_home_recyclerView.setAdapter(workerJobsAdapter);
                 }
                 else{
-                    HRA_VIEW_worker_home_recyclerView.setVisibility(View.VISIBLE);
+                    HRA_TXT_worker_home_noRequests.setVisibility(View.VISIBLE);
                     HRA_VIEW_worker_home_recyclerView.setVisibility(View.GONE);
                 }
 

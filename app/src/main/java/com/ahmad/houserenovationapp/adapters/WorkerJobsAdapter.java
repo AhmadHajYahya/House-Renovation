@@ -14,7 +14,7 @@ import com.ahmad.houserenovationapp.R;
 import com.ahmad.houserenovationapp.model.Request;
 
 import java.util.List;
-
+/** @noinspection ALL*/
 public class WorkerJobsAdapter extends RecyclerView.Adapter<WorkerJobsAdapter.JobViewHolder> {
 
     private final Context context;
@@ -46,7 +46,6 @@ public class WorkerJobsAdapter extends RecyclerView.Adapter<WorkerJobsAdapter.Jo
 
         holder.HRA_TXT_job_customer_personalName.setText("Personal Name: " + request.getCustomer().getPersonalName());
         holder.HRA_TXT_job_customer_phoneNumber.setText("Phone number: " + request.getCustomer().getPhoneNumber());
-        //holder.HRA_TXT_job_customer_location.setText("Location: " + request.getCustomer().getAddress()); TODO
 
         // Set up the cancel button click listener
         holder.HRA_BTN_job_accept.setOnClickListener(v -> {
@@ -74,7 +73,6 @@ public class WorkerJobsAdapter extends RecyclerView.Adapter<WorkerJobsAdapter.Jo
         TextView HRA_TXT_job_date;
         TextView HRA_TXT_job_customer_personalName;
         TextView HRA_TXT_job_customer_phoneNumber;
-        TextView HRA_TXT_job_customer_location;
         AppCompatButton HRA_BTN_job_accept;
         AppCompatButton HRA_BTN_job_decline;
 
@@ -87,7 +85,6 @@ public class WorkerJobsAdapter extends RecyclerView.Adapter<WorkerJobsAdapter.Jo
             HRA_TXT_job_date = itemView.findViewById(R.id.HRA_TXT_job_date);
             HRA_TXT_job_customer_personalName = itemView.findViewById(R.id.HRA_TXT_job_customer_personalName);
             HRA_TXT_job_customer_phoneNumber = itemView.findViewById(R.id.HRA_TXT_job_customer_phoneNumber);
-            HRA_TXT_job_customer_location = itemView.findViewById(R.id.HRA_TXT_job_customer_location);
             HRA_BTN_job_accept = itemView.findViewById(R.id.HRA_BTN_job_accept);
             HRA_BTN_job_decline = itemView.findViewById(R.id.HRA_BTN_job_decline);
         }

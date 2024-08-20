@@ -3,9 +3,6 @@ package com.ahmad.houserenovationapp.logic;
 import com.ahmad.houserenovationapp.model.Request;
 import com.ahmad.houserenovationapp.model.User;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class MyDataManager {
 
     private static User workerToHire;

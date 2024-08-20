@@ -9,7 +9,7 @@ import com.ahmad.houserenovationapp.model.User;
 import java.time.LocalDate;
 import java.util.Map;
 import java.util.UUID;
-
+/** @noinspection ALL*/
 public class GeneratorClass {
     public static User createCustomer(Map<String,Object> data){
         return new User.Builder()

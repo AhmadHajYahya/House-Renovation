@@ -1,10 +1,9 @@
 package com.ahmad.houserenovationapp.model;
 
+import androidx.annotation.NonNull;
+
 import com.ahmad.houserenovationapp.enums.Category;
 import com.ahmad.houserenovationapp.enums.Status;
-import com.google.android.gms.maps.model.LatLng;
-
-import java.time.LocalDate;
 
 public class Request {
 
@@ -82,6 +81,7 @@ public class Request {
         return workerRated;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Request{" +

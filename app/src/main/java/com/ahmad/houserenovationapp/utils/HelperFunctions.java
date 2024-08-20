@@ -21,7 +21,7 @@ public class HelperFunctions {
         locationB.setLongitude(lon2);
 
         // Calculate the distance in meters
-        double distance = (double)locationA.distanceTo(locationB);
+        double distance = locationA.distanceTo(locationB);
 
         return (int) Math.ceil(distance);
     }

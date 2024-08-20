@@ -13,6 +13,7 @@ import com.ahmad.houserenovationapp.enums.Status;
 import com.ahmad.houserenovationapp.enums.UserType;
 import com.ahmad.houserenovationapp.model.Request;
 import com.ahmad.houserenovationapp.model.User;
+import com.ahmad.houserenovationapp.utils.HelperFunctions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,7 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/** @noinspection ALL*/
 public class DataBaseManager {
 
     private static FirebaseDatabase database;
@@ -91,17 +92,25 @@ public class DataBaseManager {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<User> workersList = new ArrayList<>();
+                double userLatitude = getCurrentUser().getLatitude();
+                double userLongitude = getCurrentUser().getLongitude();
+
                 for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                    User user = userSnapshot.getValue(User.class);
-                    if (user != null && user.getUserType().equals(UserType.WORKER)) {
-                        if(category.equals(Category.ALL)){
-                            workersList.add(user);
-                        }
-                        else if (user.getWorkCategory() == category) {
-                            workersList.add(user);
+                    User worker = userSnapshot.getValue(User.class);
+                    if (worker != null && worker.getUserType().equals(UserType.WORKER)) {
+                        if (category.equals(Category.ALL) || worker.getWorkCategory() == category) {
+                            workersList.add(worker);
                         }
                     }
                 }
+
+                // Calculate distance and sort workers by ascending distance
+                workersList.sort((worker1, worker2) -> {
+                    double distance1 = HelperFunctions.calculateDistance(userLatitude, userLongitude, worker1.getLatitude(), worker1.getLongitude());
+                    double distance2 = HelperFunctions.calculateDistance(userLatitude, userLongitude, worker2.getLatitude(), worker2.getLongitude());
+                    return Double.compare(distance1, distance2);
+                });
+
                 setWorkers(workersList);
                 callback.onWorkerListRetrieved(workersList);
             }
@@ -190,13 +199,16 @@ public class DataBaseManager {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String userId = getCurrentUser().getId();
+                Request foundRequest = null;
+
                 for (DataSnapshot requestSnapshot : snapshot.getChildren()) {
                     Request request = requestSnapshot.getValue(Request.class);
                     if (request != null && request.getWorker().getId().equals(userId) && (request.getStatus().equals(Status.ACCEPTED) || request.getStatus().equals(Status.IN_PROGRESS))) {
-                        callBack.onRequestRetrieved(request);
+                        foundRequest = request;
+                        break;
                     }
                 }
-
+                callBack.onRequestRetrieved(foundRequest);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

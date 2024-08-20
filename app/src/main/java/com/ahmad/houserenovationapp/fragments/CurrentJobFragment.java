@@ -1,9 +1,6 @@
 package com.ahmad.houserenovationapp.fragments;
 
-import android.annotation.SuppressLint;
-import android.opengl.Visibility;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,15 +14,11 @@ import androidx.fragment.app.Fragment;
 
 import com.ahmad.houserenovationapp.R;
 import com.ahmad.houserenovationapp.callback.RequestCallBack;
-import com.ahmad.houserenovationapp.callback.UserCallBack;
 import com.ahmad.houserenovationapp.enums.Status;
 import com.ahmad.houserenovationapp.logic.DataBaseManager;
 import com.ahmad.houserenovationapp.logic.MyDataManager;
 import com.ahmad.houserenovationapp.model.Request;
-import com.ahmad.houserenovationapp.model.User;
 import com.ahmad.houserenovationapp.utils.MapHandler;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -33,6 +26,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+/** @noinspection ALL*/
 public class CurrentJobFragment extends Fragment implements OnMapReadyCallback {
 
     private TextView HRA_TXT_currentJob_title;
@@ -58,19 +52,26 @@ public class CurrentJobFragment extends Fragment implements OnMapReadyCallback {
 
         updateView();
 
-        if(MyDataManager.getCurrentJob()!=null && MyDataManager.getCurrentJob().getStatus().equals(Status.IN_PROGRESS)){
-            HRA_BTN_currentJob_startWorking.setVisibility(View.GONE);
-            HRA_BTN_currentJob_finish.setVisibility(View.VISIBLE);
-        }else{
-            HRA_BTN_currentJob_startWorking.setVisibility(View.VISIBLE);
-            HRA_BTN_currentJob_finish.setVisibility(View.GONE);
-        }
+        DataBaseManager.getWorkerCurrentJob(new RequestCallBack() {
+            @Override
+            public void onRequestRetrieved(Request request) {
+                MyDataManager.setCurrentJob(request);
+                if(MyDataManager.getCurrentJob()!=null && MyDataManager.getCurrentJob().getStatus().equals(Status.IN_PROGRESS)){
+                    HRA_BTN_currentJob_startWorking.setVisibility(View.GONE);
+                    HRA_BTN_currentJob_finish.setVisibility(View.VISIBLE);
+                }else{
+                    HRA_BTN_currentJob_startWorking.setVisibility(View.VISIBLE);
+                    HRA_BTN_currentJob_finish.setVisibility(View.GONE);
+                }
+            }
+        });
+
         startWorkingButtonListener();
         finishButtonListener();
         return view;
     }
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(@NonNull GoogleMap googleMap) {
         mapHandler.setupMap(googleMap);
         if(MyDataManager.getCurrentJob()!=null){
             LatLng location = new LatLng(MyDataManager.getCurrentJob().getLatitude(),MyDataManager.getCurrentJob().getLongitude());
@@ -90,12 +91,7 @@ public class CurrentJobFragment extends Fragment implements OnMapReadyCallback {
             DataBaseManager.updateRequest(MyDataManager.getCurrentJob().getId(), "status", Status.DONE.name());
             MyDataManager.setCurrentJob(null);
             DataBaseManager.updateUserData(DataBaseManager.getCurrentUser().getId(),"working",false);
-            DataBaseManager.getUser(new UserCallBack() {
-                @Override
-                public void onUserRetrieved(User user) {
-                    DataBaseManager.setCurrentUser(user);
-                }
-            });
+            DataBaseManager.getUser(DataBaseManager::setCurrentUser);
             HRA_BTN_currentJob_startWorking.setVisibility(View.GONE);
             updateView();
             Toast.makeText(getActivity(),"Job Finished",Toast.LENGTH_SHORT).show();
@@ -103,17 +99,30 @@ public class CurrentJobFragment extends Fragment implements OnMapReadyCallback {
     }
     void startWorkingButtonListener(){
         HRA_BTN_currentJob_startWorking.setOnClickListener(v->{
-            DataBaseManager.updateRequest(MyDataManager.getCurrentJob().getId(), "status", Status.IN_PROGRESS.name());
             DataBaseManager.getWorkerCurrentJob(new RequestCallBack() {
                 @Override
                 public void onRequestRetrieved(Request request) {
-                    MyDataManager.setCurrentJob(request);
+                    if(request!=null){
+                        DataBaseManager.updateRequest(request.getId(), "status", Status.IN_PROGRESS.name());
+                        DataBaseManager.getWorkerCurrentJob(new RequestCallBack() {
+                            @Override
+                            public void onRequestRetrieved(Request request) {
+                                MyDataManager.setCurrentJob(request);
+                            }
+                        });
+
+                        HRA_BTN_currentJob_startWorking.setVisibility(View.GONE);
+                        HRA_BTN_currentJob_finish.setVisibility(View.VISIBLE);
+                        Toast.makeText(getActivity(),"Work Started",Toast.LENGTH_SHORT).show();
+                    }else{
+                        MyDataManager.setCurrentJob(null);
+                        HRA_LAYOUT_currentJob_noJob_container.setVisibility(View.VISIBLE);
+                        HRA_LAYOUT_currentJob_container.setVisibility(View.GONE);
+                    }
                 }
             });
 
-            HRA_BTN_currentJob_startWorking.setVisibility(View.GONE);
-            HRA_BTN_currentJob_finish.setVisibility(View.VISIBLE);
-            Toast.makeText(getActivity(),"Work Started",Toast.LENGTH_SHORT).show();
+
         });
     }
 

@@ -1,6 +1,5 @@
 package com.ahmad.houserenovationapp.adapters;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ahmad.houserenovationapp.R;
 import com.ahmad.houserenovationapp.logic.DataBaseManager;
-import com.ahmad.houserenovationapp.model.Request;
 import com.ahmad.houserenovationapp.model.User;
 import com.ahmad.houserenovationapp.utils.HelperFunctions;
 
 import java.util.List;
-
+/** @noinspection ALL*/
 public class WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.WorkerViewHolder> {
 
     private final Context context;
@@ -50,7 +48,7 @@ public class WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.WorkerView
 
         int distance = HelperFunctions.calculateDistance(DataBaseManager.getCurrentUser().getLatitude(), DataBaseManager.getCurrentUser().getLongitude(), user.getLatitude(),user.getLongitude());
 
-        holder.HRA_TXT_workerCard_distance.setText("Distance: " + distance + "m"); // TODO calcualte the distance between this user and the workers location
+        holder.HRA_TXT_workerCard_distance.setText("Distance: " + distance + "m");
 
         // Check if the worker is already in favorites and update the heart icon accordingly
         if (DataBaseManager.getCurrentUser().getFavoriteWorkers().contains(user.getId())) {

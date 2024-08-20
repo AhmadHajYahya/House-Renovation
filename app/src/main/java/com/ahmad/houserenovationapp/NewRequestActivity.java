@@ -3,32 +3,18 @@ package com.ahmad.houserenovationapp;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.ahmad.houserenovationapp.enums.Category;
 import com.ahmad.houserenovationapp.logic.DataBaseManager;
 import com.ahmad.houserenovationapp.logic.GeneratorClass;
 import com.ahmad.houserenovationapp.logic.MyDataManager;
 import com.ahmad.houserenovationapp.model.Request;
-import com.ahmad.houserenovationapp.model.User;
 import com.ahmad.houserenovationapp.utils.MapHandler;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -37,10 +23,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
-
+/** @noinspection ALL*/
 public class NewRequestActivity extends AppCompatActivity implements OnMapReadyCallback {
     private TextView HRA_TXT_newRequest_category;
     private AppCompatEditText HRA_ETXT_newRequest_title;

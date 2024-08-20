@@ -1,7 +1,6 @@
 package com.ahmad.houserenovationapp;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -32,15 +31,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
+/** @noinspection ALL*/
 public class RegisterActivity extends AppCompatActivity {
     private Spinner HRA_SP_register_categorySpinner;
     private LinearLayout HRA_LAYOUT_register_workerLayout;
