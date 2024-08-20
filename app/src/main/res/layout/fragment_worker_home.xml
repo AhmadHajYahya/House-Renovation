@@ -18,13 +18,23 @@
         android:textSize="24sp"
         android:textStyle="bold"/>
 
+    <TextView
+        android:id="@+id/HRA_TXT_worker_home_noRequests"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/HRA_TXT_worker_home_requestsText"
+        android:text="@string/noJobs"
+        android:textSize="16sp"
+        />
+
     <!-- RecyclerView for the list of professionals -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/HRA_VIEW_worker_home_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/HRA_TXT_worker_home_requestsText"
+        android:layout_below="@id/HRA_TXT_worker_home_noRequests"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="55dp"/>
+        android:layout_marginBottom="55dp"
+        android:visibility="gone"/>
 
 </RelativeLayout>

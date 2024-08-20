@@ -1,6 +1,7 @@
 package com.ahmad.houserenovationapp.model;
 
 import com.ahmad.houserenovationapp.enums.Category;
+import com.ahmad.houserenovationapp.enums.Status;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.time.LocalDate;
@@ -16,6 +17,8 @@ public class Request {
     private double longitude;
     private User customer;
     private User worker;
+    private Status status;
+    private boolean workerRated;
 
     public Request(){
 
@@ -31,6 +34,8 @@ public class Request {
         this.worker = builder.worker;
         this.latitude = builder.latitude;
         this.longitude = builder.longitude;
+        this.status = builder.status;
+        this.workerRated = builder.workerRated;
     }
 
     // Getters
@@ -70,6 +75,13 @@ public class Request {
         return longitude;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+    public boolean getWorkerRated() {
+        return workerRated;
+    }
+
     @Override
     public String toString() {
         return "Request{" +
@@ -82,6 +94,8 @@ public class Request {
                 ", longitude=" + longitude +
                 ", customer=" + customer +
                 ", worker=" + worker +
+                ", status=" + status +
+                ", workerRated=" + workerRated +
                 '}';
     }
 
@@ -93,9 +107,12 @@ public class Request {
         private Category category;
         private User customer;
         private User worker;
-        private String date;  // Change from LocalDate to String
-        private double latitude;  // Replace LatLng with latitude and longitude
+        private String date;
+        private double latitude;
         private double longitude;
+        private Status status;
+        private boolean  workerRated;
+
         // Setter methods for the builder, returning Builder for method chaining
         public Builder setId(String id) {
             this.id = id;
@@ -129,6 +146,13 @@ public class Request {
 
         public Builder setWorker(User worker) {
             this.worker = worker;
+            return this;
+        }public Builder setStatus(Status status) {
+            this.status = status;
+            return this;
+        }
+        public Builder setWorkerRated(boolean value) {
+            this.workerRated = value;
             return this;
         }
         public Builder setLocation(double latitude,double longitude) {

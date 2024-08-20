@@ -16,7 +16,8 @@ public class User {
     private String phoneNumber;
     private Category workCategory;
     private double rating;
-    private boolean isWorking;
+    private int numberOfRatings;
+    private boolean working;
     private UserType userType;
     private List<String> favoriteWorkers; // List of favorite worker IDs
 
@@ -33,7 +34,8 @@ public class User {
         this.phoneNumber = builder.phoneNumber;
         this.workCategory = builder.workCategory;
         this.rating = builder.rating;
-        this.isWorking = builder.isWorking;
+        this.numberOfRatings = builder.numberOfRatings;
+        this.working = builder.working;
         this.userType = builder.userType;
         this.latitude = builder.latitude;
         this.longitude = builder.longitude;
@@ -67,10 +69,12 @@ public class User {
 
     public double getRating() {
         return rating;
+    }public int getNumberOfRatings() {
+        return numberOfRatings;
     }
 
-    public boolean isWorking() {
-        return isWorking;
+    public boolean getWorking() {
+        return working;
     }
 
     public UserType getUserType() {
@@ -111,7 +115,7 @@ public class User {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", workCategory=" + workCategory +
                 ", rating=" + rating +
-                ", isWorking=" + isWorking +
+                ", isWorking=" + working +
                 ", userType=" + userType +
                 ", favoriteWorkers=" + favoriteWorkers +
                 '}';
@@ -128,7 +132,8 @@ public class User {
         private String phoneNumber;
         private Category workCategory;
         private double rating;
-        private boolean isWorking;
+        private int numberOfRatings;
+        private boolean working;
         private UserType userType;
         private List<String> favoriteWorkers;
 
@@ -166,10 +171,13 @@ public class User {
         public Builder setRating(double rating) {
             this.rating = rating;
             return this;
+        }public Builder setNumberOfRatings(int numberOfRating) {
+            this.numberOfRatings = numberOfRating;
+            return this;
         }
 
-        public Builder setIsWorking(boolean isWorking) {
-            this.isWorking = isWorking;
+        public Builder setWorking(boolean isWorking) {
+            this.working = isWorking;
             return this;
         }
 

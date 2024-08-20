@@ -15,6 +15,18 @@
         android:padding="8dp"
         >
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/HRA_TXT_request_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/service_details"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
+        </RelativeLayout>
         <TextView
             android:id="@+id/HRA_TXT_request_title"
             android:layout_width="wrap_content"
@@ -22,7 +34,6 @@
             android:text="Title: Garden"
             android:textColor="@android:color/black"
             android:textSize="16sp"
-            android:textStyle="bold"
             android:layout_marginTop="8dp" />
 
         <TextView
@@ -52,6 +63,57 @@
             android:textSize="14sp"
             android:layout_marginTop="4dp" />
 
+        <TextView
+            android:id="@+id/HRA_TXT_request_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status: ACCEPTED"
+            android:textColor="#FF7700"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"
+            android:textStyle="bold"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+            <TextView
+                android:id="@+id/HRA_TXT_request_workerText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/worker"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/HRA_TXT_request_worker_personalName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Personal Name: Fofo"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/HRA_TXT_request_worker_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Category: GARDNER"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:id="@+id/HRA_TXT_request_worker_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rating: 4.5/5"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -66,6 +128,17 @@
                 android:text="@string/cancel"
                 android:textColor="@color/white"
                 android:background="@drawable/rounded_cancel_button"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/HRA_BTN_request_rateWorker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="@string/rate_worker"
+                android:textColor="@color/white"
+                android:background="@drawable/rounded_accept_button"
+                android:visibility="gone"
+                />
 
 
         </RelativeLayout>

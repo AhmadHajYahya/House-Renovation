@@ -93,7 +93,7 @@ public class NewRequestActivity extends AppCompatActivity implements OnMapReadyC
         HRA_BTN_newRequest.setOnClickListener(v -> {
             String title = HRA_ETXT_newRequest_title.getText().toString().trim();
             String description = HRA_ETXT_newRequest_description.getText().toString().trim();
-            selectedLocationMarker = mapHandler.getSelectedLocationMarker();
+
             LatLng currentLocation;
             if (title.isEmpty() || description.isEmpty()) {
                 Toast.makeText(this, "Please enter title and description", Toast.LENGTH_SHORT).show();

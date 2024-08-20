@@ -61,4 +61,9 @@
     <string name="title1">Title:</string>
     <string name="description1">Description:</string>
     <string name="search_by_worker_personal_name">Search worker by personal name</string>
+    <string name="confirm">Confirm</string>
+    <string name="rate_worker">Rate Worker</string>
+    <string name="startWorking">Start working</string>
+    <string name="noRequests">No Requests</string>
+    <string name="noJobs">No Jobs</string>
 </resources>

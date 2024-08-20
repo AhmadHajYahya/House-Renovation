@@ -1,6 +1,7 @@
 package com.ahmad.houserenovationapp;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -8,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.ahmad.houserenovationapp.callback.RequestCallBack;
 import com.ahmad.houserenovationapp.callback.UserCallBack;
 import com.ahmad.houserenovationapp.enums.UserType;
 import com.ahmad.houserenovationapp.fragments.CurrentJobFragment;
@@ -16,6 +18,8 @@ import com.ahmad.houserenovationapp.fragments.CustomerHomeFragment;
 import com.ahmad.houserenovationapp.fragments.ProfileFragment;
 import com.ahmad.houserenovationapp.fragments.WorkerHomeFragment;
 import com.ahmad.houserenovationapp.logic.DataBaseManager;
+import com.ahmad.houserenovationapp.logic.MyDataManager;
+import com.ahmad.houserenovationapp.model.Request;
 import com.ahmad.houserenovationapp.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -35,6 +39,14 @@ public class MainActivity extends AppCompatActivity {
             public void onUserRetrieved(User user) {
                 if (user != null) {
                     UserType userType = user.getUserType();
+                    if (userType.equals(UserType.WORKER) && user.getWorking()){
+                        DataBaseManager.getWorkerCurrentJob(new RequestCallBack() {
+                            @Override
+                            public void onRequestRetrieved(Request request) {
+                                MyDataManager.setCurrentJob(request);
+                            }
+                        });
+                    }
                     Fragment fragment = null;
                     if (userType.equals(UserType.WORKER)) {
                         fragment = new WorkerHomeFragment();

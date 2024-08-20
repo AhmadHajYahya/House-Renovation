@@ -1,14 +1,15 @@
 package com.ahmad.houserenovationapp.logic;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.ahmad.houserenovationapp.callback.RequestCallBack;
+import com.ahmad.houserenovationapp.callback.RequestsListCallBack;
 import com.ahmad.houserenovationapp.callback.UserCallBack;
 import com.ahmad.houserenovationapp.callback.WorkerListCallback;
 import com.ahmad.houserenovationapp.enums.Category;
+import com.ahmad.houserenovationapp.enums.Status;
 import com.ahmad.houserenovationapp.enums.UserType;
 import com.ahmad.houserenovationapp.model.Request;
 import com.ahmad.houserenovationapp.model.User;
@@ -32,7 +33,6 @@ public class DataBaseManager {
     private static FirebaseUser firebaseUser;
     private static User user;
     private static List<User> workers;
-    private static List<Request> requests;
 
     static {
         database = FirebaseDatabase.getInstance();
@@ -47,7 +47,7 @@ public class DataBaseManager {
         usersRef.child(user.getId()).setValue(user);
     }
 
-    public static void updateUserData(String userId, String key, String value){
+    public static void updateUserData(String userId, String key, Object value){
         usersRef.child(userId).child(key).setValue(value);
     }
 
@@ -126,7 +126,7 @@ public class DataBaseManager {
         requestsRef.child(request.getId()).setValue(request);
     }
 
-    public static void getUserRequests(RequestCallBack callBack){
+    public static void getUserRequests(RequestsListCallBack callBack){
         requestsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -135,19 +135,18 @@ public class DataBaseManager {
                 if(getCurrentUser().getUserType().equals(UserType.WORKER)){
                     for (DataSnapshot requestSnapshot : snapshot.getChildren()) {
                         Request request = requestSnapshot.getValue(Request.class);
-                        if (request != null && request.getWorker().getId().equals(userId)) {
+                        if (request != null && request.getWorker().getId().equals(userId) && request.getStatus().equals(Status.PLACED)) {
                             requests.add(request);
                         }
                     }
                 }else {
                     for (DataSnapshot requestSnapshot : snapshot.getChildren()) {
                         Request request = requestSnapshot.getValue(Request.class);
-                        if (request != null && request.getCustomer().getId().equals(userId)) {
+                        if (request != null && request.getCustomer().getId().equals(userId) && !request.getStatus().equals(Status.DONE)) {
                             requests.add(request);
                         }
                     }
                 }
-                setCurrentUserRequests(requests);
                 callBack.onRequestsRetrieved(requests);
             }
 
@@ -159,8 +158,8 @@ public class DataBaseManager {
 
     }
 
-    public static List<Request> getCurrentUserRequests(){
-        return requests;
+    public static void updateRequest(String requestId, String key, Object value){
+        requestsRef.child(requestId).child(key).setValue(value);
     }
 
 
@@ -171,11 +170,6 @@ public class DataBaseManager {
            }
         });
     }
-
-    public static void setCurrentUserRequests(List<Request> reqs){
-         requests = reqs;
-    }
-
 
     public static void addFavoriteWorkerToUser(String workerId) {
         if (user != null && user.getUserType() == UserType.CUSTOMER) {
@@ -191,6 +185,25 @@ public class DataBaseManager {
         }
     }
 
+    public static void getWorkerCurrentJob(RequestCallBack callBack){
+        requestsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String userId = getCurrentUser().getId();
+                for (DataSnapshot requestSnapshot : snapshot.getChildren()) {
+                    Request request = requestSnapshot.getValue(Request.class);
+                    if (request != null && request.getWorker().getId().equals(userId) && (request.getStatus().equals(Status.ACCEPTED) || request.getStatus().equals(Status.IN_PROGRESS))) {
+                        callBack.onRequestRetrieved(request);
+                    }
+                }
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                callBack.onRequestRetrieved(null); // Handle error case
+            }
+        });
+    }
     public static  void initUsers(){
         List<User> users = new ArrayList<>();
         users.add(new User.Builder()
@@ -203,7 +216,7 @@ public class DataBaseManager {
                 .setUserType(UserType.WORKER)
                 .setWorkCategory(Category.ELECTRICIAN)
                 .setRating(0.0)
-                .setIsWorking(false)
+                .setWorking(false)
                 .build());
 
         users.add(new User.Builder()
@@ -216,7 +229,7 @@ public class DataBaseManager {
                 .setUserType(UserType.WORKER)
                 .setWorkCategory(Category.PLUMBER)
                 .setRating(0.0)
-                .setIsWorking(false)
+                .setWorking(false)
                 .build());
 
         users.add(new User.Builder()
@@ -229,7 +242,7 @@ public class DataBaseManager {
                 .setUserType(UserType.WORKER)
                 .setWorkCategory(Category.BUILDER)
                 .setRating(0.0)
-                .setIsWorking(false)
+                .setWorking(false)
                 .build());
 
         users.add(new User.Builder()
@@ -242,7 +255,7 @@ public class DataBaseManager {
                 .setUserType(UserType.WORKER)
                 .setWorkCategory(Category.DRYWALL_REPAIR)
                 .setRating(0.0)
-                .setIsWorking(false)
+                .setWorking(false)
                 .build());
 
         users.add(new User.Builder()
@@ -255,7 +268,7 @@ public class DataBaseManager {
                 .setUserType(UserType.WORKER)
                 .setWorkCategory(Category.GARDNER)
                 .setRating(0.0)
-                .setIsWorking(false)
+                .setWorking(false)
                 .build());
 
         for (User user : users) {

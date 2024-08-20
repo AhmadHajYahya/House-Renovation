@@ -46,7 +46,7 @@ public class WorkerAdapter extends RecyclerView.Adapter<WorkerAdapter.WorkerView
 
         holder.HRA_TXT_workerCard_personalName.setText("Personal Name: " + user.getPersonalName());
         holder.HRA_TXT_workerCard_category.setText("Category: " + user.getWorkCategory());
-        holder.HRA_TXT_workerCard_rating.setText("Rating: " + user.getRating() + "/5");
+        holder.HRA_TXT_workerCard_rating.setText("Rating: " + user.getRating() + "/5.0");
 
         int distance = HelperFunctions.calculateDistance(DataBaseManager.getCurrentUser().getLatitude(), DataBaseManager.getCurrentUser().getLongitude(), user.getLatitude(),user.getLongitude());
 

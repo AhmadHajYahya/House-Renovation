@@ -5,27 +5,30 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.ahmad.houserenovationapp.LoginActivity;
 import com.ahmad.houserenovationapp.R;
+import com.ahmad.houserenovationapp.enums.Category;
 import com.ahmad.houserenovationapp.enums.UserType;
 import com.ahmad.houserenovationapp.logic.DataBaseManager;
 import com.ahmad.houserenovationapp.model.User;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.view.LayoutInflater;
+import android.widget.Button;
+import android.widget.EditText;
 
-public class ProfileFragment  extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ProfileFragment extends Fragment {
     private RelativeLayout HRA_LAYOUT_profile_logoutButtonContainer;
     private RelativeLayout HRA_LAYOUT_profile_category;
     private ImageButton editPersonalNameButton;
@@ -38,6 +41,7 @@ public class ProfileFragment  extends Fragment {
     private TextView HRA_TXT_categoryTextView;
 
     private String userId;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -50,49 +54,114 @@ public class ProfileFragment  extends Fragment {
         viewUserData(DataBaseManager.getCurrentUser());
         listeners();
 
-        // Inflate the layout for this fragment
         return view;
     }
 
-    void logoutListener(){
+    void logoutListener() {
         HRA_LAYOUT_profile_logoutButtonContainer.setOnClickListener(v -> {
-            DataBaseManager.logoutUser(); // Perform logout using FirebaseAuth
+            DataBaseManager.logoutUser();
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
         });
     }
 
-    void viewUserData(User user){
-
+    void viewUserData(User user) {
         HRA_TXT_profile_personalNmeTextView.setText(user.getPersonalName());
         HRA_TXT_personalNameTextView.setText(user.getPersonalName());
         HRA_TXT_phoneNumberTextView.setText(user.getPhoneNumber());
-        if(user.getUserType().equals(UserType.WORKER)){
+        if (user.getUserType().equals(UserType.WORKER)) {
             HRA_LAYOUT_profile_category.setVisibility(View.VISIBLE);
-            HRA_TXT_categoryTextView.setText(user.getPersonalName());
+            HRA_TXT_categoryTextView.setText(user.getWorkCategory().toString());
         }
     }
 
-    void listeners(){
-        editPersonalNameButton.setOnClickListener(v->{
-            // TODO
-            //DataBaseManager.updateUserData(userId,"personalName", value);
-        });
-        editPasswordButton.setOnClickListener(v->{
-            // TODO
-            //DataBaseManager.updateUserData(userId,"password", value);
-        });
-        editCategoryButton.setOnClickListener(v->{
-            // TODO
-            //DataBaseManager.updateUserData(userId,"category", value);
-        });
-        editPhoneNumberButton.setOnClickListener(v->{
-            // TODO
-            //DataBaseManager.updateUserData(userId,"phoneNumber", value);
-        });
+    void listeners() {
+        editPersonalNameButton.setOnClickListener(v -> showEditDialog("personalName", "Personal Name", HRA_TXT_personalNameTextView.getText().toString()));
+        editPasswordButton.setOnClickListener(v -> showEditDialog("password", "Password", ""));
+        editCategoryButton.setOnClickListener(v -> showEditDialog("workCategory", "Category", HRA_TXT_categoryTextView.getText().toString()));
+        editPhoneNumberButton.setOnClickListener(v -> showEditDialog("phoneNumber", "Phone Number", HRA_TXT_phoneNumberTextView.getText().toString()));
     }
 
-    void findViews(View view){
+    void showEditDialog(String key, String fieldName, String currentValue) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Edit " + fieldName);
+
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_edit_user_info, null);
+        builder.setView(dialogView);
+
+        EditText inputField = dialogView.findViewById(R.id.HRA_ETXT_edit_input);
+        Spinner categorySpinner = dialogView.findViewById(R.id.HRA_SPINNER_edit_category);
+        Button confirmButton = dialogView.findViewById(R.id.HRA_BTN_edit_confirm);
+
+        if (key.equals("workCategory")) {
+            inputField.setVisibility(View.GONE);
+            categorySpinner.setVisibility(View.VISIBLE);
+
+            // Filter out the ALL value from the Category enum
+            Category[] categories = Category.values();
+            List<Category> filteredCategories = new ArrayList<>();
+            for (Category category : categories) {
+                if (!category.equals(Category.ALL)) {
+                    filteredCategories.add(category);
+                }
+            }
+
+            // Set up the spinner with the filtered list
+            ArrayAdapter<Category> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, filteredCategories);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            categorySpinner.setAdapter(adapter);
+
+            // Set the current category as selected
+            Category currentCategory = Category.valueOf(currentValue);
+            int spinnerPosition = adapter.getPosition(currentCategory);
+            categorySpinner.setSelection(spinnerPosition);
+        } else {
+            categorySpinner.setVisibility(View.GONE);
+            inputField.setVisibility(View.VISIBLE);
+            inputField.setText(currentValue);
+        }
+
+        AlertDialog dialog = builder.create();
+
+        confirmButton.setOnClickListener(v -> {
+            if (key.equals("workCategory")) {
+                Category selectedCategory = (Category) categorySpinner.getSelectedItem();
+                String newValue = selectedCategory.name();
+                DataBaseManager.updateUserData(userId, key, newValue);
+                updateViewAfterEdit(key, newValue);
+            } else {
+                String newValue = inputField.getText().toString().trim();
+                if (!newValue.isEmpty()) {
+                    DataBaseManager.updateUserData(userId, key, newValue);
+                    updateViewAfterEdit(key, newValue);
+                }
+            }
+            dialog.dismiss();
+        });
+
+        dialog.show();
+    }
+
+
+
+    void updateViewAfterEdit(String key, String newValue) {
+        switch (key) {
+            case "personalName":
+                HRA_TXT_profile_personalNmeTextView.setText(newValue);
+                HRA_TXT_personalNameTextView.setText(newValue);
+                break;
+            case "phoneNumber":
+                HRA_TXT_phoneNumberTextView.setText(newValue);
+                break;
+            case "workCategory":
+                HRA_TXT_categoryTextView.setText(newValue);
+                break;
+            // No need to update UI for password change
+        }
+    }
+
+    void findViews(View view) {
         HRA_LAYOUT_profile_logoutButtonContainer = view.findViewById(R.id.HRA_LAYOUT_profile_logoutButtonContainer);
         HRA_LAYOUT_profile_category = view.findViewById(R.id.HRA_LAYOUT_profile_category);
         editPersonalNameButton = view.findViewById(R.id.editPersonalNameButton);
@@ -105,3 +174,4 @@ public class ProfileFragment  extends Fragment {
         HRA_TXT_categoryTextView = view.findViewById(R.id.HRA_TXT_categoryTextView);
     }
 }
+

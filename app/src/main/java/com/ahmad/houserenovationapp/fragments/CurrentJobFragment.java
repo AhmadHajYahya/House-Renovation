@@ -3,6 +3,7 @@ package com.ahmad.houserenovationapp.fragments;
 import android.annotation.SuppressLint;
 import android.opengl.Visibility;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,13 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
 import com.ahmad.houserenovationapp.R;
+import com.ahmad.houserenovationapp.callback.RequestCallBack;
+import com.ahmad.houserenovationapp.callback.UserCallBack;
+import com.ahmad.houserenovationapp.enums.Status;
+import com.ahmad.houserenovationapp.logic.DataBaseManager;
 import com.ahmad.houserenovationapp.logic.MyDataManager;
+import com.ahmad.houserenovationapp.model.Request;
+import com.ahmad.houserenovationapp.model.User;
 import com.ahmad.houserenovationapp.utils.MapHandler;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
@@ -35,6 +42,7 @@ public class CurrentJobFragment extends Fragment implements OnMapReadyCallback {
     private TextView HRA_TXT_currentJob_customer_phoneNumber;
     private MapView HRA_MAP_currentJob_map;
     private AppCompatButton HRA_BTN_currentJob_finish;
+    private AppCompatButton HRA_BTN_currentJob_startWorking;
     private MapHandler mapHandler;
     private RelativeLayout HRA_LAYOUT_currentJob_noJob_container;
     private RelativeLayout HRA_LAYOUT_currentJob_container;
@@ -47,7 +55,17 @@ public class CurrentJobFragment extends Fragment implements OnMapReadyCallback {
         HRA_MAP_currentJob_map.onCreate(savedInstanceState);
         HRA_MAP_currentJob_map.getMapAsync(this);
         mapHandler = new MapHandler(getActivity(), HRA_MAP_currentJob_map, this);
+
         updateView();
+
+        if(MyDataManager.getCurrentJob()!=null && MyDataManager.getCurrentJob().getStatus().equals(Status.IN_PROGRESS)){
+            HRA_BTN_currentJob_startWorking.setVisibility(View.GONE);
+            HRA_BTN_currentJob_finish.setVisibility(View.VISIBLE);
+        }else{
+            HRA_BTN_currentJob_startWorking.setVisibility(View.VISIBLE);
+            HRA_BTN_currentJob_finish.setVisibility(View.GONE);
+        }
+        startWorkingButtonListener();
         finishButtonListener();
         return view;
     }
@@ -69,9 +87,33 @@ public class CurrentJobFragment extends Fragment implements OnMapReadyCallback {
 
     void finishButtonListener(){
         HRA_BTN_currentJob_finish.setOnClickListener(v->{
+            DataBaseManager.updateRequest(MyDataManager.getCurrentJob().getId(), "status", Status.DONE.name());
             MyDataManager.setCurrentJob(null);
+            DataBaseManager.updateUserData(DataBaseManager.getCurrentUser().getId(),"working",false);
+            DataBaseManager.getUser(new UserCallBack() {
+                @Override
+                public void onUserRetrieved(User user) {
+                    DataBaseManager.setCurrentUser(user);
+                }
+            });
+            HRA_BTN_currentJob_startWorking.setVisibility(View.GONE);
             updateView();
             Toast.makeText(getActivity(),"Job Finished",Toast.LENGTH_SHORT).show();
+        });
+    }
+    void startWorkingButtonListener(){
+        HRA_BTN_currentJob_startWorking.setOnClickListener(v->{
+            DataBaseManager.updateRequest(MyDataManager.getCurrentJob().getId(), "status", Status.IN_PROGRESS.name());
+            DataBaseManager.getWorkerCurrentJob(new RequestCallBack() {
+                @Override
+                public void onRequestRetrieved(Request request) {
+                    MyDataManager.setCurrentJob(request);
+                }
+            });
+
+            HRA_BTN_currentJob_startWorking.setVisibility(View.GONE);
+            HRA_BTN_currentJob_finish.setVisibility(View.VISIBLE);
+            Toast.makeText(getActivity(),"Work Started",Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -102,6 +144,7 @@ public class CurrentJobFragment extends Fragment implements OnMapReadyCallback {
         HRA_BTN_currentJob_finish = view.findViewById(R.id.HRA_BTN_currentJob_finish);
         HRA_LAYOUT_currentJob_noJob_container = view.findViewById(R.id.HRA_LAYOUT_currentJob_noJob_container);
         HRA_LAYOUT_currentJob_container= view.findViewById(R.id.HRA_LAYOUT_currentJob_container);
+        HRA_BTN_currentJob_startWorking= view.findViewById(R.id.HRA_BTN_currentJob_startWorking);
 
     }
 
